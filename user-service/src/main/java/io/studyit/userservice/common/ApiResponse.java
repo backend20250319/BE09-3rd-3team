@@ -27,7 +27,7 @@ public class ApiResponse<T> {
         return ApiResponse.<T>builder()
                 .success(false)
                 .errorCode(errorCode)
-                .message(message)
+                .message("회원가입 성공")
                 .timestamp(LocalDateTime.now())
                 .build();
     }

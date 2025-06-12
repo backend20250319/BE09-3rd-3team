@@ -19,7 +19,11 @@ public class UserCommandService {
 
     @Transactional
     public void registerUser(UserCreateRequest request) {
-       // 중복 회원 체크 로직 등 추가 가능
+
+        if(userRepository.existsByUserId(request.getUserId())) {
+            throw new IllegalArgumentException("이미 존재하는 사용자 ID 입니다.");
+        }
+
        User user = modelMapper.map(request, User.class);
        user.setEncodedPassword(passwordEncoder.encode(request.getPassword()));
        userRepository.save(user);
