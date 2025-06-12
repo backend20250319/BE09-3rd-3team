@@ -35,8 +35,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-### Secrets and Credentials
-.env
-*.p12
-application.yml
