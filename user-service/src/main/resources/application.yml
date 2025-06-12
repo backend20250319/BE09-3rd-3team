@@ -11,20 +11,26 @@ eureka:
       defaultZone: http://localhost:8761/eureka
 
 spring:
+  config:
+    import: "configserver:http://localhost:8888"
   application:
     name: studyit-user-service
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://mysql.coffit.xyz:3322/studyitdb
-    username: studyit
-    password: q0ZuPwM675dzjgBvG5gF
+  cloud:
+    config:
+      uri: http://localhost:8888
+      name: studyit-user-service
+
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
         format_sql: true
+jwt:
+  secret: Vk7xj2Ga8XBYQnCk9B8alfd0fdx8ajJ4Oj3eNLHKxjlGid4gbwWmZVef1HDwiSWGzAYghtUUObbwwpfUtBV8ZA==
+  expiration: 86400000
+  refresh-expiration: 604800000
 
 management:
   endpoints:
