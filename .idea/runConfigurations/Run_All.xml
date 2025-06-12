@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run All" type="CompoundRunConfigurationType">
+    <toRun name="DiscoveryServerApplication" type="SpringBootApplicationConfigurationType" />
+    <toRun name="GatewayApplication" type="SpringBootApplicationConfigurationType" />
+    <method v="2" />
+  </configuration>
+</component>
