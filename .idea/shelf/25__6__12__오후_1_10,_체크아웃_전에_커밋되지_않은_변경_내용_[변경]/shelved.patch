@@ -1,0 +1,165 @@
+Index: .idea/material_theme_project_new.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"MaterialThemeProjectNewConfig\">\r\n    <option name=\"metadata\">\r\n      <MTProjectMetadataState>\r\n        <option name=\"userId\" value=\"747981d2:19761ad13c1:-7fe0\" />\r\n      </MTProjectMetadataState>\r\n    </option>\r\n  </component>\r\n</project>
+===================================================================
+diff --git a/.idea/material_theme_project_new.xml b/.idea/material_theme_project_new.xml
+--- a/.idea/material_theme_project_new.xml	(revision 56af321c2c6007084231c898b72320970e96afe9)
++++ b/.idea/material_theme_project_new.xml	(date 1749700987501)
+@@ -3,7 +3,9 @@
+   <component name="MaterialThemeProjectNewConfig">
+     <option name="metadata">
+       <MTProjectMetadataState>
+-        <option name="userId" value="747981d2:19761ad13c1:-7fe0" />
++        <option name="migrated" value="true" />
++        <option name="pristineConfig" value="false" />
++        <option name="userId" value="7cfcd7ec:19710762a70:-7ffe" />
+       </MTProjectMetadataState>
+     </option>
+   </component>
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"cd82327c-2b13-4073-93b9-53523f7cf012\" name=\"변경\" comment=\"\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\"><![CDATA[{\r\n  \"associatedIndex\": 6\r\n}]]></component>\r\n  <component name=\"ProjectId\" id=\"2yO8xC0bum1LYrs0tgbo8ROwpCN\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"ModuleVcsDetector.initialDetectionPerformed\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"RunOnceActivity.git.unshallow\": \"true\",\r\n    \"git-widget-placeholder\": \"main\",\r\n    \"last_opened_file_path\": \"C:/Project/studyit/BE09-3rd-3team\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.23774.435\" />\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-IU-251.23774.435\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"디폴트 작업\">\r\n      <changelist id=\"cd82327c-2b13-4073-93b9-53523f7cf012\" name=\"변경\" comment=\"\" />\r\n      <created>1749694503560</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1749694503560</updated>\r\n      <workItem from=\"1749694504686\" duration=\"449000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n</project>
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 56af321c2c6007084231c898b72320970e96afe9)
++++ b/.idea/workspace.xml	(date 1749700987490)
+@@ -10,12 +10,38 @@
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
+   </component>
++  <component name="ExternalProjectsData">
++    <projectState path="$PROJECT_DIR$/config-server">
++      <ProjectState />
++    </projectState>
++    <projectState path="$PROJECT_DIR$/discovery-server">
++      <ProjectState />
++    </projectState>
++    <projectState path="$PROJECT_DIR$/gateway">
++      <ProjectState />
++    </projectState>
++    <projectState path="$PROJECT_DIR$/study-service">
++      <ProjectState />
++    </projectState>
++  </component>
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+-  <component name="ProjectColorInfo"><![CDATA[{
+-  "associatedIndex": 6
++  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
++  "lastFilter": {
++    "state": "OPEN",
++    "assignee": "nyaeon"
++  }
++}]]></component>
++  <component name="GithubPullRequestsUISettings"><![CDATA[{
++  "selectedUrlAndAccountId": {
++    "url": "https://github.com/backend20250319/BE09-3rd-3team.git",
++    "accountId": "cb0e5db5-f374-4594-bc06-2239af0ae31a"
++  }
+ }]]></component>
++  <component name="ProjectColorInfo">{
++  &quot;associatedIndex&quot;: 6
++}</component>
+   <component name="ProjectId" id="2yO8xC0bum1LYrs0tgbo8ROwpCN" />
+   <component name="ProjectViewState">
+     <option name="showLibraryContents" value="true" />
+@@ -25,7 +51,9 @@
+     "ModuleVcsDetector.initialDetectionPerformed": "true",
+     "RunOnceActivity.ShowReadmeOnStart": "true",
+     "RunOnceActivity.git.unshallow": "true",
+-    "git-widget-placeholder": "main",
++    "Spring Boot.DiscoveryServerApplication.executor": "Run",
++    "Spring Boot.GatewayApplication.executor": "Run",
++    "git-widget-placeholder": "feature/user-auth",
+     "last_opened_file_path": "C:/Project/studyit/BE09-3rd-3team",
+     "node.js.detected.package.eslint": "true",
+     "node.js.detected.package.tslint": "true",
+@@ -35,6 +63,57 @@
+     "vue.rearranger.settings.migration": "true"
+   }
+ }]]></component>
++  <component name="RunDashboard">
++    <option name="configurationTypes">
++      <set>
++        <option value="KtorApplicationConfigurationType" />
++        <option value="MicronautRunConfigurationType" />
++        <option value="QuarkusRunConfigurationType" />
++        <option value="SpringBootApplicationConfigurationType" />
++      </set>
++    </option>
++    <option name="hiddenConfigurations">
++      <map>
++        <entry key="SpringBootApplicationConfigurationType">
++          <value>
++            <set>
++              <option value="StudyServiceApplication" />
++            </set>
++          </value>
++        </entry>
++      </map>
++    </option>
++  </component>
++  <component name="RunManager">
++    <configuration name="ConfigServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
++      <module name="config-server.main" />
++      <option name="SPRING_BOOT_MAIN_CLASS" value="io.studyit.configserver.ConfigServerApplication" />
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
++    <configuration name="DiscoveryServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
++      <module name="discovery-server.main" />
++      <option name="SPRING_BOOT_MAIN_CLASS" value="io.studyit.discoveryserver.DiscoveryServerApplication" />
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
++    <configuration name="GatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
++      <module name="gateway.main" />
++      <option name="SPRING_BOOT_MAIN_CLASS" value="io.studyit.gateway.GatewayApplication" />
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
++    <configuration name="StudyServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
++      <module name="study-service.main" />
++      <option name="SPRING_BOOT_MAIN_CLASS" value="com.ohgiraffers.studyservice.StudyServiceApplication" />
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
++  </component>
+   <component name="SharedIndexes">
+     <attachedChunks>
+       <set>
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectModuleManager\">\r\n    <modules>\r\n      <module fileurl=\"file://$PROJECT_DIR$/.idea/BE09-3rd-3team.iml\" filepath=\"$PROJECT_DIR$/.idea/BE09-3rd-3team.iml\" />\r\n    </modules>\r\n  </component>\r\n</project>
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+--- a/.idea/modules.xml	(revision 56af321c2c6007084231c898b72320970e96afe9)
++++ b/.idea/modules.xml	(date 1749700987114)
+@@ -3,6 +3,18 @@
+   <component name="ProjectModuleManager">
+     <modules>
+       <module fileurl="file://$PROJECT_DIR$/.idea/BE09-3rd-3team.iml" filepath="$PROJECT_DIR$/.idea/BE09-3rd-3team.iml" />
++      <module fileurl="file://$PROJECT_DIR$/.idea/modules/config-server.iml" filepath="$PROJECT_DIR$/.idea/modules/config-server.iml" />
++      <module fileurl="file://$PROJECT_DIR$/.idea/modules/config-server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/config-server.main.iml" />
++      <module fileurl="file://$PROJECT_DIR$/.idea/modules/config-server.test.iml" filepath="$PROJECT_DIR$/.idea/modules/config-server.test.iml" />
++      <module fileurl="file://$PROJECT_DIR$/.idea/modules/discovery-server.iml" filepath="$PROJECT_DIR$/.idea/modules/discovery-server.iml" />
++      <module fileurl="file://$PROJECT_DIR$/.idea/modules/discovery-server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/discovery-server.main.iml" />
++      <module fileurl="file://$PROJECT_DIR$/.idea/modules/discovery-server.test.iml" filepath="$PROJECT_DIR$/.idea/modules/discovery-server.test.iml" />
++      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gateway.iml" filepath="$PROJECT_DIR$/.idea/modules/gateway.iml" />
++      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gateway.main.iml" filepath="$PROJECT_DIR$/.idea/modules/gateway.main.iml" />
++      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gateway.test.iml" filepath="$PROJECT_DIR$/.idea/modules/gateway.test.iml" />
++      <module fileurl="file://$PROJECT_DIR$/.idea/modules/study-service.iml" filepath="$PROJECT_DIR$/.idea/modules/study-service.iml" />
++      <module fileurl="file://$PROJECT_DIR$/.idea/modules/study-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/study-service.main.iml" />
++      <module fileurl="file://$PROJECT_DIR$/.idea/modules/study-service.test.iml" filepath="$PROJECT_DIR$/.idea/modules/study-service.test.iml" />
+     </modules>
+   </component>
+ </project>
+\ No newline at end of file
