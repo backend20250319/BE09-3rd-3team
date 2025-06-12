@@ -1,89 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectInspectionProfilesVisibleTreeState">
-    <entry key="Project Default">
-      <profile-state>
-        <expanded-state>
-          <State>
-            <id>Flow 타입 검사기JavaScript 및 TypeScript</id>
-          </State>
-          <State>
-            <id>Gradle</id>
-          </State>
-          <State>
-            <id>JSP</id>
-          </State>
-          <State>
-            <id>JVM 언어</id>
-          </State>
-          <State>
-            <id>Java</id>
-          </State>
-          <State>
-            <id>JavaScript 및 TypeScript</id>
-          </State>
-          <State>
-            <id>Kotlin</id>
-          </State>
-          <State>
-            <id>Micronaut</id>
-          </State>
-          <State>
-            <id>MicronautMicronaut</id>
-          </State>
-          <State>
-            <id>PostgreSQL</id>
-          </State>
-          <State>
-            <id>SQL</id>
-          </State>
-          <State>
-            <id>Spring</id>
-          </State>
-          <State>
-            <id>Spring BootSpring</id>
-          </State>
-          <State>
-            <id>Spring CoreSpring</id>
-          </State>
-          <State>
-            <id>TestNGJava</id>
-          </State>
-          <State>
-            <id>교정</id>
-          </State>
-          <State>
-            <id>로깅JVM 언어</id>
-          </State>
-          <State>
-            <id>발생할 수 있는 버그Gradle</id>
-          </State>
-          <State>
-            <id>발생할 수 있는 버그Kotlin</id>
-          </State>
-          <State>
-            <id>언어 삽입</id>
-          </State>
-          <State>
-            <id>오류 처리Java</id>
-          </State>
-          <State>
-            <id>이름 생성 규칙Kotlin</id>
-          </State>
-          <State>
-            <id>일반</id>
-          </State>
-          <State>
-            <id>코드Spring CoreSpring</id>
-          </State>
-        </expanded-state>
-        <selected-state>
-          <State>
-            <id>사용자 정의</id>
-          </State>
-        </selected-state>
-      </profile-state>
-    </entry>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/discovery-server" />
+    <file type="web" url="file://$PROJECT_DIR$/gateway" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" project-jdk-name="temurin-17" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
 </project>
