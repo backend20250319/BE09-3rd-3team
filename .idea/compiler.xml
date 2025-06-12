@@ -2,6 +2,9 @@
 <project version="4">
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="config-server" options="-parameters" />
+      <module name="config-server.main" options="-parameters" />
+      <module name="config-server.test" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
       <module name="discovery-server.main" options="-parameters" />
       <module name="discovery-server.test" options="-parameters" />
