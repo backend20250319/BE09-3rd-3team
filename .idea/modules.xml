@@ -2,10 +2,14 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/comment-service/StudyIt.comment-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/comment-service/StudyIt.comment-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/gateway/StudyIt.gateway.main.iml" filepath="$PROJECT_DIR$/.idea/modules/gateway/StudyIt.gateway.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/jwt-common/StudyIt.jwt-common.main.iml" filepath="$PROJECT_DIR$/.idea/modules/jwt-common/StudyIt.jwt-common.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/study-service/StudyIt.study-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/study-service/StudyIt.study-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/user-service/StudyIt.user-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/user-service/StudyIt.user-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/study-service/com.ohgiraffers.StudyIt.study-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/study-service/com.ohgiraffers.StudyIt.study-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jwt-common/io.studyit.StudyIt.jwt-common.main.iml" filepath="$PROJECT_DIR$/.idea/modules/jwt-common/io.studyit.StudyIt.jwt-common.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/user-service/io.studyit.StudyIt.user-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/user-service/io.studyit.StudyIt.user-service.main.iml" />
     </modules>
   </component>
 </project>

@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +30,6 @@ public class StudyService {
                 .organizer(request.getOrganizer())
                 .category(request.getCategory())
                 .maxMembers(request.getMaxMembers())
-                .closed(false)
                 .status(StudyStatus.OPEN)
                 .build();
 
@@ -57,11 +57,12 @@ public class StudyService {
         Study study = studyRepository.findById(studyRoomId)
                 .orElseThrow(() -> new StudyNotFoundException(studyRoomId));
 
-        study.setClosed(true);
         study.setStatus(StudyStatus.CLOSED);
+        study.setClosedAt(LocalDateTime.now());  //  마감 일시 설정
         studyRepository.save(study);
 
-        log.info("스터디가 마감되었습니다. [postId={}, title={}]", study.getStudyRoomId(), study.getTitle());
+        log.info("스터디가 마감되었습니다. [postId={}, title={}, closedAt={}]",
+                study.getStudyRoomId(), study.getTitle(), study.getClosedAt());
     }
 
     // 스터디 내용 수정
