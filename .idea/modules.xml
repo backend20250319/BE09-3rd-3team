@@ -2,18 +2,24 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-<<<<<<< HEAD
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/commentservice.iml" filepath="$PROJECT_DIR$/.idea/modules/commentservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/commentservice.main.iml" filepath="$PROJECT_DIR$/.idea/modules/commentservice.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/commentservice.test.iml" filepath="$PROJECT_DIR$/.idea/modules/commentservice.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/config-server.iml" filepath="$PROJECT_DIR$/.idea/modules/config-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/config-server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/config-server.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/config-server.test.iml" filepath="$PROJECT_DIR$/.idea/modules/config-server.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/discovery-server.iml" filepath="$PROJECT_DIR$/.idea/modules/discovery-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/discovery-server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/discovery-server.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/discovery-server.test.iml" filepath="$PROJECT_DIR$/.idea/modules/discovery-server.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gateway.iml" filepath="$PROJECT_DIR$/.idea/modules/gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gateway.main.iml" filepath="$PROJECT_DIR$/.idea/modules/gateway.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gateway.test.iml" filepath="$PROJECT_DIR$/.idea/modules/gateway.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/study-service.iml" filepath="$PROJECT_DIR$/.idea/modules/study-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/study-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/study-service.main.iml" />
-=======
-      <module fileurl="file://$PROJECT_DIR$/.idea/BE09-3rd-3team.iml" filepath="$PROJECT_DIR$/.idea/BE09-3rd-3team.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/config-server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/config-server.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/study-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/study-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/study-service.test.iml" filepath="$PROJECT_DIR$/.idea/modules/study-service.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/user-service.iml" filepath="$PROJECT_DIR$/.idea/modules/user-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/user-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/user-service.main.iml" />
->>>>>>> 58abaa15c51dc845529443acd42275c6f2755e3d
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/user-service.test.iml" filepath="$PROJECT_DIR$/.idea/modules/user-service.test.iml" />
     </modules>
   </component>
 </project>

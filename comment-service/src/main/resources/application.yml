@@ -1,5 +1,5 @@
 server:
-  port: 8000
+  port: 8866
 
 eureka:
   instance:
@@ -14,11 +14,6 @@ spring:
   application:
     name: comment-service
 
-  datasource:
-    url: jdbc:mysql://mysql.coffit.xyz:3322/studyitdb
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: studyit
-    password: htifgLE5Duhq299WaUCB
   jpa:
     hibernate:
       ddl-auto: update
