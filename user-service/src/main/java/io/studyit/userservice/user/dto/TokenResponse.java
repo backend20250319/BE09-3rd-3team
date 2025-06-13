@@ -1,4 +1,4 @@
-package io.studyit.userservice.auth.dto;
+package io.studyit.userservice.user.dto;
 
 import lombok.Builder;
 import lombok.Getter;
