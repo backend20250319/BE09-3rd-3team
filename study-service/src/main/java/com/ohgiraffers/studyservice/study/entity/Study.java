@@ -33,6 +33,8 @@ public class Study {
     @Column(updatable = false)
     private LocalDateTime createdAt;       // 생성일시
 
+    private LocalDateTime closedAt; // 마감 일시
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
@@ -43,5 +45,11 @@ public class Study {
         if (createdAt == null) return null;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초");
         return createdAt.format(formatter);
+    }
+
+    public String getFormattedClosedAt() {
+        if (closedAt == null) return null;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초");
+        return closedAt.format(formatter);
     }
 }
