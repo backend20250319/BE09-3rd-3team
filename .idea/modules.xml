@@ -5,6 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/jwt-common/StudyIt.jwt-common.main.iml" filepath="$PROJECT_DIR$/.idea/modules/jwt-common/StudyIt.jwt-common.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/study-service/StudyIt.study-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/study-service/StudyIt.study-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/user-service/StudyIt.user-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/user-service/StudyIt.user-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/study-service/com.ohgiraffers.StudyIt.study-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/study-service/com.ohgiraffers.StudyIt.study-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/user-service/io.studyit.StudyIt.user-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/user-service/io.studyit.StudyIt.user-service.main.iml" />
     </modules>
   </component>
 </project>
