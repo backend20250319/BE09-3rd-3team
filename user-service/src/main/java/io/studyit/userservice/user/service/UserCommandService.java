@@ -34,12 +34,14 @@ public class UserCommandService {
 
     @Transactional
     public void changePassword(String userId, ChangePasswordRequest request, UserDetailsImpl userDetails) {
+
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다."));
+
+
         if (!userDetails.getUserId().equals(userId)) {
             throw new IllegalArgumentException("본인만 비밀번호를 변경할 수 있습니다.");
         }
-
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다."));
 
         if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
             throw new IllegalArgumentException("현재 비밀번호가 올바르지 않습니다.");
@@ -51,7 +53,7 @@ public class UserCommandService {
 
     @Transactional
     public void changeName(String userId, ChangeNameRequest request, UserDetailsImpl userDetails) {
-        User user = userRepository.findById(userId)
+        User user = userRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다."));
 
         if (!user.getUserId().equals(userDetails.getUserId())) {
