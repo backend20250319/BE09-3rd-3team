@@ -22,6 +22,7 @@ public class StudyJoinEntity {
     @Column(name = "user_id")
     private String userId;
 
+    @Column(name = "study_room_id")
     private Long studyRoomId;
 
     @Enumerated(EnumType.STRING)
