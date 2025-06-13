@@ -1,0 +1,34 @@
+plugins {
+    id 'java'
+}
+
+group = 'io.studyit'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // JWT (io.jsonwebtoken)
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6' // Jackson 기반 파서
+
+    // ConfigurationProperties 바인딩용 (JwtProperties용)
+    compileOnly 'org.springframework.boot:spring-boot:3.5.0'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:3.5.0'
+
+    compileOnly("org.projectlombok:lombok:1.18.38")
+    annotationProcessor("org.projectlombok:lombok:1.18.38")
+
+    testCompileOnly("org.projectlombok:lombok:1.18.38")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.38")
+
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
