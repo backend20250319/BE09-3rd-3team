@@ -18,7 +18,7 @@ public class StudyController {
 
     private final StudyService studyService;
 
-    // ✅ 스터디 개설 (유효성 검증 추가)
+    //  스터디 개설 (유효성 검증 추가)
     @PostMapping("/create")
     public ResponseEntity<StudyResponse> createStudy(@Valid @RequestBody StudyCreateRequest request) {
         StudyResponse response = studyService.createStudy(request);
@@ -44,7 +44,7 @@ public class StudyController {
         return ResponseEntity.noContent().build();
     }
 
-    // ✅ 스터디 내용 수정 (유효성 검증 추가)
+    //  스터디 내용 수정 (유효성 검증 추가)
     @PutMapping("/update/{studyRoomId}")
     public ResponseEntity<StudyResponse> updateStudy(@PathVariable Long studyRoomId,
                                                      @Valid @RequestBody StudyUpdateRequest request) {

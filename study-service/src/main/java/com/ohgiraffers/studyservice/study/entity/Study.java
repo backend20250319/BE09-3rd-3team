@@ -29,7 +29,7 @@ public class Study {
     private String category;               // ex) Java, Spring, SQL 등
     private int maxMembers;                // 최대 인원 수
 
-    private Long userId;                // ✅ 고정된 코드
+    private String userId;                // ✅ 고정된 코드
 
     @Column(updatable = false)
     private LocalDateTime createdAt;       // 생성일시
@@ -37,7 +37,7 @@ public class Study {
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
-        this.userId = 2L;               // 항상 2로 고정
+        this.userId = "2";               // 항상 2로 고정
     }
 
     public String getFormattedCreatedAt() {
