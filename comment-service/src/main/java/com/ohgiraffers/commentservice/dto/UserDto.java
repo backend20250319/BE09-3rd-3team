@@ -1,4 +1,4 @@
-package com.ohgiraffers.commentservice.client;
+package com.ohgiraffers.commentservice.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,5 +8,4 @@ import lombok.Setter;
 public class UserDto {
     private String id;
     private String name;
-    private String pwd;
 }
