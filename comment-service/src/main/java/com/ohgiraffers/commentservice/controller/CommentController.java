@@ -17,6 +17,7 @@ public class CommentController {
     @PostMapping
     public ResponseEntity<String> create(@RequestBody CommentRequestDto dto) {
         try {
+            System.out.println("check");
             dto.setCreatedUserId("test");
             commentService.create(dto);
             String message = "댓글 등록됨\n댓글: " + dto.getContent();

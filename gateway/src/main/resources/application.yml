@@ -19,8 +19,7 @@ spring:
             - id: comment-service
               uri: lb://comment-service
               predicates:
-                - Path=/comment/**
-                - Path=/notice/**
+                - Path=/comment/**, /notice/**
 
 eureka:
   client:
