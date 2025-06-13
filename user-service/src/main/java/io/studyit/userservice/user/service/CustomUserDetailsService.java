@@ -4,10 +4,14 @@ import io.studyit.userservice.user.entity.User;
 import io.studyit.userservice.user.repository.UserRepository;
 import io.studyit.userservice.user.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +24,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userRepository.findByUserId(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with userId: " + userId));
 
-        return new UserDetailsImpl(user);
+        // 권한이 없다면 빈 리스트로 처리
+        List<GrantedAuthority> authorities = Collections.emptyList();
+
+        return new UserDetailsImpl(user.getUserId(), authorities);
     }
+
 }

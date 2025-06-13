@@ -11,18 +11,27 @@ import java.util.Collection;
 @Getter
 public class UserDetailsImpl implements UserDetails {
 
-    private String userId;
-    private String password;
-    private Collection<? extends GrantedAuthority> authorities;
+    private final String userId;
+    private final Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(User user) {
-        this.userId = user.getUserId();
-        this.password = user.getPassword();
+    public UserDetailsImpl(String userId, Collection<? extends GrantedAuthority> authorities) {
+        this.userId = userId;
+        this.authorities = authorities;
+    }
+
+
+    public String getUserId() {
+        return userId;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return java.util.Collections.emptyList();
+        return authorities;
+    }
+
+    @Override
+    public String getPassword() {
+        return null;
     }
 
     @Override
