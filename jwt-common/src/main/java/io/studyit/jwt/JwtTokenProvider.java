@@ -1,9 +1,6 @@
 package io.studyit.jwt;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
@@ -22,6 +19,23 @@ public class JwtTokenProvider {
         this.secretKey = Keys.hmacShaKeyFor(bytes);
         this.expiration = properties.getExpiration();
         this.refreshExpiration = properties.getRefreshExpiration();
+    }
+
+    private Jws<Claims> parseToken(String token) throws InvalidJwtException {
+        try {
+            return Jwts.parser()
+                    .verifyWith(secretKey)
+                    .build()
+                    .parseSignedClaims(token);
+        } catch (SecurityException | MalformedJwtException e) {
+            throw new InvalidJwtException("Invalid JWT Token");
+        } catch (ExpiredJwtException e) {
+            throw new InvalidJwtException("Expired JWT Token");
+        } catch (UnsupportedJwtException e) {
+            throw new InvalidJwtException("Unsupported JWT Token");
+        } catch (IllegalArgumentException e) {
+            throw new InvalidJwtException("JWT Token claims empty");
+        }
     }
 
     public String createToken(String subject) {
@@ -47,25 +61,17 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public boolean validateToken(String token) {
+    public boolean isValidToken(String token) {
         try {
-            Jwts.parser()
-                    .verifyWith(secretKey)
-                    .build()
-                    .parseSignedClaims(token);
+            parseToken(token);
             return true;
-        } catch (JwtException e) {
+        } catch (InvalidJwtException e) {
             return false;
         }
     }
 
-    public String getSubjectFromToken(String token) {
-        Claims claims = Jwts.parser()
-                .verifyWith(secretKey)
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
-
-        return claims.getSubject(); // 보통 userId를 subject로 저장
+    public JwtPayload getPayloadFromToken(String token) throws InvalidJwtException {
+        var payload = parseToken(token).getPayload();
+        return new JwtPayload(payload.getSubject());
     }
 }
