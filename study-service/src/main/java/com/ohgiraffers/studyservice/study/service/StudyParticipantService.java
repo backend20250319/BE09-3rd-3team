@@ -4,9 +4,9 @@ import com.ohgiraffers.studyservice.study.entity.ParticipationStatus;
 import com.ohgiraffers.studyservice.study.entity.Study;
 import com.ohgiraffers.studyservice.study.entity.StudyParticipant;
 import com.ohgiraffers.studyservice.study.exception.ParticipantNotFoundException;
-import com.ohgiraffers.studyservice.study.exception.StudyNotFoundException;
-import com.ohgiraffers.studyservice.study.repasitory.StudyParticipantRepository;
-import com.ohgiraffers.studyservice.study.repasitory.StudyRepository;
+import com.ohgiraffers.studyservice.study.exception.StudyStatusNotFoundException;
+import com.ohgiraffers.studyservice.study.repository.StudyParticipantRepository;
+import com.ohgiraffers.studyservice.study.repository.StudyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class StudyParticipantService {
 
     public void apply(Long studyRoomId, Long userId) {
         Study study = studyRepository.findById(studyRoomId)
-                .orElseThrow(() -> new StudyNotFoundException(studyRoomId));
+                .orElseThrow(() -> new StudyStatusNotFoundException(studyRoomId));
 
         StudyParticipant participant = StudyParticipant.builder()
                 .study(study)
@@ -78,7 +78,7 @@ public class StudyParticipantService {
 // 스터디 최대 인원 반환
     public int getMaxMembers(Long studyRoomId) {
         Study study = studyRepository.findById(studyRoomId)
-                .orElseThrow(() -> new StudyNotFoundException(studyRoomId));
+                .orElseThrow(() -> new StudyStatusNotFoundException(studyRoomId));
         return study.getMaxMembers();
     }
 

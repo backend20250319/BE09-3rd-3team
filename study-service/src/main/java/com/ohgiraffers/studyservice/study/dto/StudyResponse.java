@@ -16,8 +16,8 @@ public class StudyResponse {
     private StudyStatus status;           // 상태 (OPEN / CLOSED)
     private String category;              // 카테고리
     private int maxMembers;               // 최대 인원
-    private String createdAtFormatted;    // ✅ 생성일 포맷
-    private String closedAtFormatted;     // ✅ 마감일 포맷
+    private String createdAtFormatted;    // 생성일 포맷
+    private String closedAtFormatted;     // 마감일 포맷
 
     public static StudyResponse from(Study study) {
         return StudyResponse.builder()
@@ -28,8 +28,8 @@ public class StudyResponse {
                 .status(study.getStatus())
                 .category(study.getCategory())
                 .maxMembers(study.getMaxMembers())
-                .createdAtFormatted(study.getFormattedCreatedAt())   // ✅ 생성일 포맷
-                .closedAtFormatted(study.getFormattedClosedAt())     // ✅ 마감일 포맷
+                .createdAtFormatted(study.getFormattedCreatedAt())   // 생성일 포맷
+                .closedAtFormatted(study.getFormattedClosedAt())     // 마감일 포맷
                 .build();
     }
 }

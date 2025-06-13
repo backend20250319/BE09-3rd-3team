@@ -4,11 +4,13 @@ import com.ohgiraffers.studyservice.study.dto.StudyCreateRequest;
 import com.ohgiraffers.studyservice.study.dto.StudyResponse;
 import com.ohgiraffers.studyservice.study.dto.StudyUpdateRequest;
 import com.ohgiraffers.studyservice.study.service.StudyService;
+import com.ohgiraffers.studyservice.study.service.StudyStatusService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -17,12 +19,20 @@ import java.util.List;
 public class StudyController {
 
     private final StudyService studyService;
+    private final StudyStatusService studyStatusService;
 
     // 스터디 개설
     @PostMapping("/create")
     public ResponseEntity<StudyResponse> createStudy(@Valid @RequestBody StudyCreateRequest request) {
+        // 1) 스터디 저장
         StudyResponse response = studyService.createStudy(request);
-        return ResponseEntity.ok(response);
+
+        // 2) 스터디 상태 테이블에 추가
+        studyStatusService.createStudyStatusWithId(response.getStudyRoomId());
+
+        // 201 Created + Location 헤더
+        URI location = URI.create("/study/search/" + response.getStudyRoomId());
+        return ResponseEntity.created(location).body(response);
     }
 
     // 전체 스터디 목록 조회
@@ -41,13 +51,16 @@ public class StudyController {
     @PutMapping("/close/{studyRoomId}")
     public ResponseEntity<Void> closeStudy(@PathVariable Long studyRoomId) {
         studyService.closeStudy(studyRoomId);
+        studyStatusService.closeStudyStatus(studyRoomId);
         return ResponseEntity.noContent().build();
     }
 
     // 스터디 수정
     @PutMapping("/update/{studyRoomId}")
-    public ResponseEntity<StudyResponse> updateStudy(@PathVariable Long studyRoomId,
-                                                     @Valid @RequestBody StudyUpdateRequest request) {
+    public ResponseEntity<StudyResponse> updateStudy(
+            @PathVariable Long studyRoomId,
+            @Valid @RequestBody StudyUpdateRequest request) {
+
         StudyResponse response = studyService.updateStudy(studyRoomId, request);
         return ResponseEntity.ok(response);
     }

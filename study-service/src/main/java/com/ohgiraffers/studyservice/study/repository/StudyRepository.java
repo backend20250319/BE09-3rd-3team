@@ -1,4 +1,4 @@
-package com.ohgiraffers.studyservice.study.repasitory;
+package com.ohgiraffers.studyservice.study.repository;
 
 import com.ohgiraffers.studyservice.study.entity.Study;
 import org.springframework.data.jpa.repository.JpaRepository;

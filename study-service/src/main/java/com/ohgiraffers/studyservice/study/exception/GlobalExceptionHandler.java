@@ -24,8 +24,8 @@ public class GlobalExceptionHandler {
     }
 
     // 2. 존재하지 않는 스터디 ID 요청 처리
-    @ExceptionHandler(StudyNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleStudyNotFoundException(StudyNotFoundException ex) {
+    @ExceptionHandler(StudyStatusNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleStudyNotFoundException(StudyStatusNotFoundException ex) {
         Map<String, String> error = new HashMap<>();
         error.put("error", ex.getMessage());
         return ResponseEntity.status(404).body(error);

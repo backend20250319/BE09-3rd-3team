@@ -6,8 +6,8 @@ import com.ohgiraffers.studyservice.study.dto.StudyUpdateRequest;
 import com.ohgiraffers.studyservice.study.entity.Study;
 import com.ohgiraffers.studyservice.study.entity.StudyStatus;
 import com.ohgiraffers.studyservice.study.exception.StudyInvalidRequestException;
-import com.ohgiraffers.studyservice.study.exception.StudyNotFoundException;
-import com.ohgiraffers.studyservice.study.repasitory.StudyRepository;
+import com.ohgiraffers.studyservice.study.exception.StudyStatusNotFoundException;
+import com.ohgiraffers.studyservice.study.repository.StudyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -51,14 +51,14 @@ public class StudyService {
     // studyRoomID로 스터디 상세 조회
     public StudyResponse getStudyById(Long studyRoomId) {
         Study study = studyRepository.findById(studyRoomId)
-                .orElseThrow(() -> new StudyNotFoundException(studyRoomId));
+                .orElseThrow(() -> new StudyStatusNotFoundException(studyRoomId));
         return StudyResponse.from(study);
     }
 
     // 스터디 마감
     public void closeStudy(Long studyRoomId) {
         Study study = studyRepository.findById(studyRoomId)
-                .orElseThrow(() -> new StudyNotFoundException(studyRoomId));
+                .orElseThrow(() -> new StudyStatusNotFoundException(studyRoomId));
 
         study.setStatus(StudyStatus.CLOSED);
         study.setClosedAt(LocalDateTime.now());
@@ -73,7 +73,7 @@ public class StudyService {
         validateUpdateRequest(request);
 
         Study study = studyRepository.findById(studyRoomId)
-                .orElseThrow(() -> new StudyNotFoundException(studyRoomId));
+                .orElseThrow(() -> new StudyStatusNotFoundException(studyRoomId));
 
         study.setTitle(request.getTitle());
         study.setDescription(request.getDescription());
@@ -88,7 +88,7 @@ public class StudyService {
     // 스터디 삭제
     public void deleteStudy(Long studyRoomId) {
         Study study = studyRepository.findById(studyRoomId)
-                .orElseThrow(() -> new StudyNotFoundException(studyRoomId));
+                .orElseThrow(() -> new StudyStatusNotFoundException(studyRoomId));
 
         studyRepository.delete(study);
         log.info("스터디가 삭제되었습니다. [postId={}, title={}]", study.getStudyRoomId(), study.getTitle());
