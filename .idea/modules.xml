@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/BE09-3rd-3team.iml" filepath="$PROJECT_DIR$/.idea/BE09-3rd-3team.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/config-server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/config-server.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/study-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/study-service.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/user-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/user-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jwt-common/StudyIt.jwt-common.main.iml" filepath="$PROJECT_DIR$/.idea/modules/jwt-common/StudyIt.jwt-common.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/study-service/StudyIt.study-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/study-service/StudyIt.study-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/user-service/StudyIt.user-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/user-service/StudyIt.user-service.main.iml" />
     </modules>
   </component>
 </project>
