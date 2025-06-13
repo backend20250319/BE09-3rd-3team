@@ -13,7 +13,6 @@ public class StudyResponse {
     private String title;               // 제목
     private String description;         // 설명
     private String organizer;           // 개설자
-//    private boolean closed;             // 마감 여부
     private StudyStatus status;         // 마감 상태 (OPEN / CLOSED)
     private String category;            // 카테고리
     private int maxMembers;             // 최대 인원
