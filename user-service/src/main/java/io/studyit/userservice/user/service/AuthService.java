@@ -1,6 +1,7 @@
 package io.studyit.userservice.user.service;
 
-import io.studyit.userservice.jwt.JwtTokenProvider;
+import io.studyit.jwt.JwtPayload;
+import io.studyit.jwt.JwtTokenProvider;
 import io.studyit.userservice.user.dto.LoginRequest;
 import io.studyit.userservice.user.dto.SignupRequest;
 import io.studyit.userservice.user.dto.TokenResponse;
@@ -69,11 +70,9 @@ public class AuthService {
     }
 
     public TokenResponse refreshToken(String providedRefreshToken) {
+        JwtPayload payload = jwtTokenProvider.getPayloadFromToken(providedRefreshToken);
 
-        jwtTokenProvider.validateToken(providedRefreshToken);
-        String userId = jwtTokenProvider.getUsernameFromJWT(providedRefreshToken);
-
-        RefreshToken storedToken = refreshTokenRepository.findById(userId)
+        RefreshToken storedToken = refreshTokenRepository.findById(payload.userId())
                 .orElseThrow(() -> new BadCredentialsException("해당 유저로 조회되는 리프레시 토큰 없음"));
 
         if (!storedToken.getToken().equals(providedRefreshToken)) {
@@ -84,7 +83,7 @@ public class AuthService {
             throw new BadCredentialsException("리프레시 토큰 유효시간 만료");
         }
 
-        User user = userRepository.findByUserId(userId)
+        User user = userRepository.findByUserId(payload.userId())
                 .orElseThrow(() -> new BadCredentialsException("해당 리프레시 토큰을 위한 유저 없음"));
 
         String accessToken = jwtTokenProvider.createToken(user.getUserId());
@@ -105,12 +104,10 @@ public class AuthService {
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
-
     }
 
     public void logout(String refreshToken) {
-        jwtTokenProvider.validateToken(refreshToken);
-        String userId = jwtTokenProvider.getUsernameFromJWT(refreshToken);
-        refreshTokenRepository.deleteById(userId);
+        JwtPayload payload = jwtTokenProvider.getPayloadFromToken(refreshToken);
+        refreshTokenRepository.deleteById(payload.userId());
     }
 }

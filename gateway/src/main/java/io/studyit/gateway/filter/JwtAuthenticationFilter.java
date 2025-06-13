@@ -1,5 +1,7 @@
 package io.studyit.gateway.filter;
 
+import io.studyit.jwt.InvalidJwtException;
+import io.studyit.jwt.JwtPayload;
 import io.studyit.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -28,15 +30,19 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
         String authHeader = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
-            if (jwtTokenProvider.validateToken(token)) {
-                String userId = jwtTokenProvider.getSubjectFromToken(token);
+            try {
+                JwtPayload payload = jwtTokenProvider.getPayloadFromToken(token);
 
                 // 사용자 ID를 헤더에 추가하여 내부 마이크로서비스로 전달
                 ServerHttpRequest mutatedRequest = exchange.getRequest().mutate()
-                        .header("X-USER-ID", userId)
+                        .header("X-USER-ID", payload.userId())
                         .build();
 
                 return chain.filter(exchange.mutate().request(mutatedRequest).build());
+
+            } catch (InvalidJwtException e) {
+                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                return exchange.getResponse().setComplete();
             }
         }
 
