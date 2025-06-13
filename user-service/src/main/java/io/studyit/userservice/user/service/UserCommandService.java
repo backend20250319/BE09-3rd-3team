@@ -8,6 +8,7 @@ import io.studyit.userservice.user.repository.UserRepository;
 import io.studyit.userservice.user.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,33 +23,39 @@ public class UserCommandService {
 
     @Transactional
     public void registerUser(UserCreateRequest request) {
-
-        if(userRepository.existsByUserId(request.getUserId())) {
+        if (userRepository.existsByUserId(request.getUserId())) {
             throw new IllegalArgumentException("이미 존재하는 사용자 ID 입니다.");
         }
 
-       User user = modelMapper.map(request, User.class);
-       user.setEncodedPassword(passwordEncoder.encode(request.getPassword()));
-       userRepository.save(user);
+        User user = modelMapper.map(request, User.class);
+        user.setEncodedPassword(passwordEncoder.encode(request.getPassword()));
+        userRepository.save(user);
     }
 
+    @Transactional
     public void changePassword(Long id, ChangePasswordRequest request, UserDetailsImpl userDetails) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다."));
 
-        // 현재 비밀번호 확인
+        if (!user.getUserId().equals(userDetails.getUserId())) {
+            throw new AccessDeniedException("본인만 비밀번호를 변경할 수 있습니다.");
+        }
+
         if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
             throw new IllegalArgumentException("현재 비밀번호가 올바르지 않습니다.");
         }
-
-        // 새 비밀번호 암호화 후 저장
         user.setEncodedPassword(passwordEncoder.encode(request.getNewPassword()));
         userRepository.save(user);
     }
 
-    public void changeName(Long id, ChangeNameRequest request) {
+    @Transactional
+    public void changeName(Long id, ChangeNameRequest request, UserDetailsImpl userDetails) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다."));
+
+        if (!user.getUserId().equals(userDetails.getUserId())) {
+            throw new AccessDeniedException("본인만 이름을 변경할 수 있습니다.");
+        }
 
         user.setName(request.getName());
         userRepository.save(user);

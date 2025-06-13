@@ -14,11 +14,12 @@ spring:
   config:
     import: "configserver:http://localhost:8888"
   application:
-    name: studyit-user-service
+    name: user-service
   cloud:
     config:
       uri: http://localhost:8888
-      name: studyit-user-service
+      name: user-service
+
   jpa:
     hibernate:
       ddl-auto: update
