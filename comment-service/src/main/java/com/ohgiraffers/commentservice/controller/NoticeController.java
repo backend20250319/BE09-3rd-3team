@@ -17,28 +17,42 @@ public class NoticeController {
     @PostMapping("/{studyRoomId}")
     public ResponseEntity<String> create(@PathVariable Long studyRoomId,
                                          @RequestBody NoticeRequestDto dto) {
-        noticeService.create(studyRoomId, dto);
-        String responseMessage = String.format(
-                "공지사항 등록 완료\n제목: %s\n내용: %s",
-                dto.getTitle(),
-                dto.getContent()
-        );
-        return ResponseEntity.ok(responseMessage);
+        try {
+            // 비어있는 필드 검증
+            if (dto.getTitle() == null || dto.getTitle().trim().isEmpty() ||
+                    dto.getContent() == null || dto.getContent().trim().isEmpty()) {
+                throw new IllegalArgumentException("비어있는 내용이 있습니다. 내용을 채워주세요.");
+            }
+            noticeService.create(studyRoomId, dto);
+            String responseMessage = String.format(
+                    "공지사항 등록 완료\n제목: %s\n내용: %s",
+                    dto.getTitle(),
+                    dto.getContent()
+            );
+            return ResponseEntity.ok(responseMessage);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
+
 
     @PutMapping("/{noticeId}")
     public ResponseEntity<String> update(@PathVariable Long noticeId,
                                          @RequestBody NoticeRequestDto dto) {
-        Notice updatedNotice = noticeService.update(noticeId, dto);
+        try {
+            Notice updatedNotice = noticeService.update(noticeId, dto);
 
-        String message = String.format(
-                "공지사항 수정 완료\n제목: %s\n내용: %s",
-                updatedNotice.getTitle(),
-                updatedNotice.getContent()
-        );
-
-        return ResponseEntity.ok(message);
+            String message = String.format(
+                    "공지사항 수정 완료\n제목: %s\n내용: %s",
+                    updatedNotice.getTitle(),
+                    updatedNotice.getContent()
+            );
+            return ResponseEntity.ok(message);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
+
 
     @DeleteMapping("/{noticeId}")
     public ResponseEntity<String> delete(@PathVariable Long noticeId) {
