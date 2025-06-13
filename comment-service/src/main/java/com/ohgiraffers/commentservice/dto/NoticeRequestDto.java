@@ -9,6 +9,6 @@ import lombok.Setter;
 public class NoticeRequestDto {
     private String title;
     private String content;
-    private Long writerId; // 방장 Id
+    private String writerId; // 방장 Id
 }
 
