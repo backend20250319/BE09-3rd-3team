@@ -22,10 +22,7 @@ public class StudyJoinCommandController {
             @AuthenticationPrincipal String userId,
             @RequestBody StudyJoinRequestDTO requestDTO) {
 
-        System.out.println("userId ====> " + userId);
-        System.out.println("requestDTO ====> " + requestDTO);
-
-        studyJoinService.joinStudy(requestDTO, Long.valueOf(userId));
+        studyJoinService.joinStudy(requestDTO, userId);
 
         String message = "스터디 참여 신청이 완료되었습니다.";
         return ResponseEntity

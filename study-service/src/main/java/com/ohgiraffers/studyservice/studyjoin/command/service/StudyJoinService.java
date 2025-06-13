@@ -14,7 +14,7 @@ public class StudyJoinService {
 
     private final StudyJoinRepository studyJoinRepository;
 
-    public void joinStudy(StudyJoinRequestDTO dto, Long userId) {
+    public void joinStudy(StudyJoinRequestDTO dto, String userId) {
         StudyJoinEntity entity = StudyJoinEntity.of(dto, userId, LocalDateTime.now());
         studyJoinRepository.save(entity);
     }

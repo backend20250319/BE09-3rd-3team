@@ -19,13 +19,16 @@ public class StudyJoinEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;        // 신청한 사용자 ID (외부에서 받아옴)
-    private Long studyId;       // 지원한 스터디 ID
+    @Column(name = "user_id")
+    private String userId;
+
+    private Long studyRoomId;
 
     @Enumerated(EnumType.STRING)
-    private Status status;      // PENDING, APPROVED, REJECTED
+    private Status status;
 
-    private LocalDateTime createdAt ;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
     public enum Status {
         PENDING,
@@ -33,12 +36,13 @@ public class StudyJoinEntity {
         REJECTED
     }
 
-    public static StudyJoinEntity of(StudyJoinRequestDTO dto, Long userId, LocalDateTime now) {
+    public static StudyJoinEntity of(StudyJoinRequestDTO dto, String userId, LocalDateTime now) {
         StudyJoinEntity entity = new StudyJoinEntity();
         entity.setUserId(userId);
-        entity.setStudyId(dto.getStudyId());
+        entity.setStudyRoomId(dto.getStudyRoomId());
         entity.setStatus(Status.PENDING);
-        entity.setCreatedAt (now);
+        entity.setCreatedAt(now);
         return entity;
     }
 }
+
