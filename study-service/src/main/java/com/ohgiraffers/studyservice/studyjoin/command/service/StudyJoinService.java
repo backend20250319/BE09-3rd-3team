@@ -4,6 +4,7 @@ import com.ohgiraffers.studyservice.studyjoin.command.dto.StudyJoinRequestDTO;
 import com.ohgiraffers.studyservice.studyjoin.command.entity.StudyJoinEntity;
 import com.ohgiraffers.studyservice.studyjoin.command.repository.StudyJoinRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,7 +17,11 @@ public class StudyJoinService {
 
     public void joinStudy(StudyJoinRequestDTO dto, String userId) {
         StudyJoinEntity entity = StudyJoinEntity.of(dto, userId, LocalDateTime.now());
-        studyJoinRepository.save(entity);
-    }
 
+        try {
+            studyJoinRepository.save(entity);
+        } catch (DataIntegrityViolationException e) {
+            throw new IllegalArgumentException("이미 신청한 스터디 입니다.");
+        }
+    }
 }

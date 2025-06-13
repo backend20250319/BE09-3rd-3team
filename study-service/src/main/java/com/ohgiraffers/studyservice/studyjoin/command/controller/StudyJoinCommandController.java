@@ -22,13 +22,17 @@ public class StudyJoinCommandController {
             @AuthenticationPrincipal String userId,
             @RequestBody StudyJoinRequestDTO requestDTO) {
 
-        studyJoinService.joinStudy(requestDTO, userId);
-
-        String message = "스터디 참여 신청이 완료되었습니다.";
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(ApiResponse.success(message));
+        try {
+            studyJoinService.joinStudy(requestDTO, userId);
+            String message = "스터디 참여 신청이 완료되었습니다.";
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(ApiResponse.success(message));
+        } catch (IllegalArgumentException e) {
+            String errMsg = "이미 신청한 스터디 입니다.";
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(ApiResponse.failure("DUPLICATE_STUDY", errMsg));
+        }
     }
-
-    //
 }
