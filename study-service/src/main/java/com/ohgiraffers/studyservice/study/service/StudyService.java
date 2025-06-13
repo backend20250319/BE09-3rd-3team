@@ -5,6 +5,7 @@ import com.ohgiraffers.studyservice.study.dto.StudyResponse;
 import com.ohgiraffers.studyservice.study.dto.StudyUpdateRequest;
 import com.ohgiraffers.studyservice.study.entity.Study;
 import com.ohgiraffers.studyservice.study.entity.StudyStatus;
+import com.ohgiraffers.studyservice.study.exception.StudyInvalidRequestException;
 import com.ohgiraffers.studyservice.study.exception.StudyNotFoundException;
 import com.ohgiraffers.studyservice.study.repasitory.StudyRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,8 @@ public class StudyService {
 
     // 스터디 개설
     public StudyResponse createStudy(StudyCreateRequest request) {
+        validateCreateRequest(request);
+
         Study study = Study.builder()
                 .title(request.getTitle())
                 .description(request.getDescription())
@@ -58,7 +61,7 @@ public class StudyService {
                 .orElseThrow(() -> new StudyNotFoundException(studyRoomId));
 
         study.setStatus(StudyStatus.CLOSED);
-        study.setClosedAt(LocalDateTime.now());  //  마감 일시 설정
+        study.setClosedAt(LocalDateTime.now());
         studyRepository.save(study);
 
         log.info("스터디가 마감되었습니다. [postId={}, title={}, closedAt={}]",
@@ -67,6 +70,8 @@ public class StudyService {
 
     // 스터디 내용 수정
     public StudyResponse updateStudy(Long studyRoomId, StudyUpdateRequest request) {
+        validateUpdateRequest(request);
+
         Study study = studyRepository.findById(studyRoomId)
                 .orElseThrow(() -> new StudyNotFoundException(studyRoomId));
 
@@ -109,5 +114,25 @@ public class StudyService {
         return result;
     }
 
+    // 스터디 생성, 수정 유효성 검사
+    private void validateCreateRequest(StudyCreateRequest request) {
+        if (request.getTitle() == null || request.getTitle().trim().isEmpty()) {
+            throw new StudyInvalidRequestException("스터디 제목은 필수입니다.");
+        }
+        if (request.getOrganizer() == null || request.getOrganizer().trim().isEmpty()) {
+            throw new StudyInvalidRequestException("스터디 주최자는 필수입니다.");
+        }
+        if (request.getMaxMembers() <= 0) {
+            throw new StudyInvalidRequestException("최대 인원은 1명 이상이어야 합니다.");
+        }
+    }
 
+    private void validateUpdateRequest(StudyUpdateRequest request) {
+        if (request.getTitle() == null || request.getTitle().trim().isEmpty()) {
+            throw new StudyInvalidRequestException("수정할 제목은 비어 있을 수 없습니다.");
+        }
+        if (request.getMaxMembers() <= 0) {
+            throw new StudyInvalidRequestException("최대 인원은 1명 이상이어야 합니다.");
+        }
+    }
 }
