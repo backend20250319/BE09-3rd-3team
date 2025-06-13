@@ -1,4 +1,4 @@
-package io.studyit.userservice.auth.entity;
+package io.studyit.userservice.user.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,10 +28,6 @@ public class RefreshToken {
 
     @Column(nullable = false)
     private Date expiryDate;
-
-
-
-
 
 
 }

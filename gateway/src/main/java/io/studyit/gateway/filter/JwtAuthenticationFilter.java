@@ -1,7 +1,7 @@
 package io.studyit.gateway.filter;
 
 import io.studyit.jwt.JwtTokenProvider;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -12,26 +12,16 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-
 @Component
+@RequiredArgsConstructor
 public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
-    private static final List<String> whitelist = List.of(
-            "/user/signup",
-            "/user/login"
-    );
-
+    private final FilterProperties properties;
     private final JwtTokenProvider jwtTokenProvider;
-
-    @Autowired
-    public JwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider) {
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String path = exchange.getRequest().getURI().getPath();
-        if (whitelist.stream().anyMatch(path::startsWith)) {
+        if (properties.getWhitelist().stream().anyMatch(path::startsWith)) {
             return chain.filter(exchange); // 인증 없이 통과
         }
 
