@@ -15,10 +15,20 @@ public class ApiResponse<T> {
     private String message;
     private LocalDateTime timestamp;
 
-    public static<T> ApiResponse<T> success(T data) {
+    public static<T> ApiResponse<T> success(T data, String message) {
         return ApiResponse.<T>builder()
                 .success(true)
                 .data(data)
+                .message(message)
+                .timestamp(LocalDateTime.now())
+                .build();
+    }
+
+    public static<T> ApiResponse<T> successWithMessage(String message) {
+        return ApiResponse.<T>builder()
+                .success(true)
+                .data(null)
+                .message(message)
                 .timestamp(LocalDateTime.now())
                 .build();
     }
@@ -27,7 +37,7 @@ public class ApiResponse<T> {
         return ApiResponse.<T>builder()
                 .success(false)
                 .errorCode(errorCode)
-                .message("회원가입 성공")
+                .message(message)
                 .timestamp(LocalDateTime.now())
                 .build();
     }
