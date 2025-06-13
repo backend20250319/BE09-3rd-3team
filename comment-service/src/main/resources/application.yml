@@ -9,11 +9,12 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://localhost:8761/eureka
-
+    config:
+      import:
+        - classpath:/bootstrap.yml
 spring:
   application:
     name: comment-service
-
   jpa:
     hibernate:
       ddl-auto: update
@@ -21,8 +22,3 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
-  logging:
-    level:
-      org.hibernate.SQL: DEBUG
-      org.hibernate.type: TRACE
