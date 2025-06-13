@@ -21,7 +21,6 @@ public class Study {
     private String title;                  // 스터디 제목
     private String description;            // 설명
     private String organizer;              // 개설자 이름
-    private boolean closed;                // 마감 여부
 
     @Enumerated(EnumType.STRING)
     private StudyStatus status;            // 스터디 상태 (OPEN, CLOSED)

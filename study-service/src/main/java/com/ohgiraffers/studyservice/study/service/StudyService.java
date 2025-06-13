@@ -29,7 +29,6 @@ public class StudyService {
                 .organizer(request.getOrganizer())
                 .category(request.getCategory())
                 .maxMembers(request.getMaxMembers())
-                .closed(false)
                 .status(StudyStatus.OPEN)
                 .build();
 
@@ -57,7 +56,6 @@ public class StudyService {
         Study study = studyRepository.findById(studyRoomId)
                 .orElseThrow(() -> new StudyNotFoundException(studyRoomId));
 
-        study.setClosed(true);
         study.setStatus(StudyStatus.CLOSED);
         studyRepository.save(study);
 
