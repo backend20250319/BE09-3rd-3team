@@ -1,6 +1,6 @@
 package com.ohgiraffers.studyservice.study.controller;
 
-import com.ohgiraffers.studyservice.study.dto.StudyApplyRequest;
+//import com.ohgiraffers.studyservice.study.dto.StudyApplyRequest;
 import com.ohgiraffers.studyservice.study.dto.StudyParticipantSummaryResponse;
 import com.ohgiraffers.studyservice.study.entity.StudyParticipant;
 import com.ohgiraffers.studyservice.study.service.StudyParticipantService;
@@ -20,13 +20,6 @@ public class StudyParticipantController {
 
     private final StudyParticipantService participantService;
 
-    // 참가 신청
-    @PostMapping("/apply/{studyRoomId}")
-    public ResponseEntity<Void> applyToStudy(@RequestBody StudyApplyRequest request) {
-        participantService.apply(request.getStudyRoomId(), request.getUserId());
-        log.info("스터디 참가 신청됨. studyRoomId={}, userId={}", request.getStudyRoomId(), request.getUserId());
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
 
     // 대기자 목록 조회
     @GetMapping("/pending/{studyRoomId}")
