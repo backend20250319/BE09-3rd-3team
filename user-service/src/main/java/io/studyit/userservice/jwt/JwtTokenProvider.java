@@ -37,7 +37,12 @@ public class JwtTokenProvider {
                 throw new IllegalArgumentException("JWT secret이 설정되지 않았습니다.");
             }
 
-            byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
+            // 개행 문자와 공백 제거
+            String cleanedSecret = jwtSecret.replaceAll("\\s+", "");
+            System.out.println("Cleaned JWT Secret: " + cleanedSecret);
+            System.out.println("Cleaned JWT Secret length: " + cleanedSecret.length());
+
+            byte[] keyBytes = Decoders.BASE64.decode(cleanedSecret);
             System.out.println("Decoded key bytes length: " + keyBytes.length);
 
             secretKey = Keys.hmacShaKeyFor(keyBytes);
@@ -46,7 +51,7 @@ public class JwtTokenProvider {
         } catch (Exception e) {
             System.err.println("=== JWT 초기화 실패 ===");
             System.err.println("Error: " + e.getMessage());
-            System.err.println("JWT Secret 값: " + jwtSecret);
+            System.err.println("JWT Secret 값: '" + jwtSecret + "'");
             e.printStackTrace();
 
             // Config Server에서 값을 못 가져왔을 가능성을 대비한 fallback
