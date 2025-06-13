@@ -37,7 +37,6 @@ public class JwtTokenProvider {
                 throw new IllegalArgumentException("JWT secret이 설정되지 않았습니다.");
             }
 
-            // 개행 문자와 공백 제거
             String cleanedSecret = jwtSecret.replaceAll("\\s+", "");
             System.out.println("Cleaned JWT Secret: " + cleanedSecret);
             System.out.println("Cleaned JWT Secret length: " + cleanedSecret.length());
@@ -54,7 +53,6 @@ public class JwtTokenProvider {
             System.err.println("JWT Secret 값: '" + jwtSecret + "'");
             e.printStackTrace();
 
-            // Config Server에서 값을 못 가져왔을 가능성을 대비한 fallback
             System.out.println("기본값으로 재시도...");
             try {
                 String fallbackSecret = "bXlTZWNyZXRLZXlGb3JKV1RUb2tlbkdlbmVyYXRpb25BbmRWYWxpZGF0aW9uUHVycG9zZXM=";
@@ -67,26 +65,22 @@ public class JwtTokenProvider {
         }
     }
 
-    public String createToken(String username, String role, Long userId) {
+    public String createToken(String userId) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpiration);
         return Jwts.builder()
-                .subject(username)
-                .claim("role", role)
-                .claim("userId", userId)
+                .subject(userId)
                 .issuedAt(now)
                 .expiration(expiryDate)
                 .signWith(secretKey)
                 .compact();
     }
 
-    public String createRefreshToken(String username, String role, Long userId) {
+    public String createRefreshToken(String userId) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtRefreshExpiration);
         return Jwts.builder()
-                .subject(username)
-                .claim("role", role)
-                .claim("userId", userId)
+                .subject(userId)
                 .issuedAt(now)
                 .expiration(expiryDate)
                 .signWith(secretKey)

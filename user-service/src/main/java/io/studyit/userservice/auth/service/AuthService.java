@@ -32,8 +32,8 @@ public class AuthService {
             throw new BadCredentialsException("올바르지 않은 아이디 혹은 비밀번호");
         }
 
-        String accessToken = jwtTokenProvider.createToken(user.getUserId(), user.getRole().name(), user.getId());
-        String refreshToken = jwtTokenProvider.createRefreshToken(user.getUserId(), user.getRole().name(), user.getId());
+        String accessToken = jwtTokenProvider.createToken(user.getUserId());
+        String refreshToken = jwtTokenProvider.createRefreshToken(user.getUserId());
 
         RefreshToken tokenEntity = RefreshToken.builder()
                 .userId(user.getUserId())
@@ -71,8 +71,8 @@ public class AuthService {
         User user = userRepository.findByUserId(userId)
                 .orElseThrow(() -> new BadCredentialsException("해당 리프레시 토큰을 위한 유저 없음"));
 
-        String accessToken = jwtTokenProvider.createToken(user.getUserId(), user.getRole().name(), user.getId());
-        String refreshToken = jwtTokenProvider.createRefreshToken(user.getUserId(), user.getRole().name(), user.getId());
+        String accessToken = jwtTokenProvider.createToken(user.getUserId());
+        String refreshToken = jwtTokenProvider.createRefreshToken(user.getUserId());
 
         RefreshToken tokenEntity = RefreshToken.builder()
                 .userId(user.getUserId())
