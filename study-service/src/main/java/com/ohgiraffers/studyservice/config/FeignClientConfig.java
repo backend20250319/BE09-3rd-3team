@@ -34,9 +34,7 @@ public class FeignClientConfig {
 
                 // 2. 내부 user service를 요청하는 상황
                 String userId = requestAttributes.getRequest().getHeader("X-User-Id");
-                String role = requestAttributes.getRequest().getHeader("X-User-Role");
                 requestTemplate.header("X-User-Id", userId);
-                requestTemplate.header("X-User-Role", role);
             }
         };
     }
