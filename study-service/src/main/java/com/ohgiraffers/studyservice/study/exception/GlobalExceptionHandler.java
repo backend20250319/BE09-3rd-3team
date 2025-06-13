@@ -1,4 +1,4 @@
-package com.ohgiraffers.studyservice.exception;
+package com.ohgiraffers.studyservice.study.exception;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

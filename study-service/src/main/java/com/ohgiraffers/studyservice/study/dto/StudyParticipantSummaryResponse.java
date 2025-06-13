@@ -1,6 +1,6 @@
-package com.ohgiraffers.studyservice.dto;
+package com.ohgiraffers.studyservice.study.dto;
 
-import com.ohgiraffers.studyservice.entity.StudyParticipant;
+import com.ohgiraffers.studyservice.study.entity.StudyParticipant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

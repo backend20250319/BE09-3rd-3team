@@ -1,4 +1,4 @@
-package com.ohgiraffers.studyservice.dto;
+package com.ohgiraffers.studyservice.study.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

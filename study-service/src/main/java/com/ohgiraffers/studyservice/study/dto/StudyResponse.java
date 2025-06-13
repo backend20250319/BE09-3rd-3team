@@ -1,7 +1,7 @@
-package com.ohgiraffers.studyservice.dto;
+package com.ohgiraffers.studyservice.study.dto;
 
-import com.ohgiraffers.studyservice.entity.Study;
-import com.ohgiraffers.studyservice.entity.StudyStatus;
+import com.ohgiraffers.studyservice.study.entity.Study;
+import com.ohgiraffers.studyservice.study.entity.StudyStatus;
 import lombok.Builder;
 import lombok.Getter;
 

@@ -1,4 +1,4 @@
-package com.ohgiraffers.studyservice.exception;
+package com.ohgiraffers.studyservice.study.exception;
 
 public class StudyNotFoundException extends RuntimeException {
     public StudyNotFoundException(Long studyRoomId) {

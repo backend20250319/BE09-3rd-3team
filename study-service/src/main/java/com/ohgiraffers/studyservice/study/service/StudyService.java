@@ -1,12 +1,12 @@
-package com.ohgiraffers.studyservice.service;
+package com.ohgiraffers.studyservice.study.service;
 
-import com.ohgiraffers.studyservice.dto.StudyCreateRequest;
-import com.ohgiraffers.studyservice.dto.StudyResponse;
-import com.ohgiraffers.studyservice.dto.StudyUpdateRequest;
-import com.ohgiraffers.studyservice.entity.Study;
-import com.ohgiraffers.studyservice.entity.StudyStatus;
-import com.ohgiraffers.studyservice.exception.StudyNotFoundException;
-import com.ohgiraffers.studyservice.repasitory.StudyRepository;
+import com.ohgiraffers.studyservice.study.dto.StudyCreateRequest;
+import com.ohgiraffers.studyservice.study.dto.StudyResponse;
+import com.ohgiraffers.studyservice.study.dto.StudyUpdateRequest;
+import com.ohgiraffers.studyservice.study.entity.Study;
+import com.ohgiraffers.studyservice.study.entity.StudyStatus;
+import com.ohgiraffers.studyservice.study.exception.StudyNotFoundException;
+import com.ohgiraffers.studyservice.study.repasitory.StudyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

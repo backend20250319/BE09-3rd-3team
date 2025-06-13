@@ -1,17 +1,11 @@
-package com.ohgiraffers.studyservice.dto;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Min;
+package com.ohgiraffers.studyservice.study.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class StudyCreateRequest {
+public class StudyUpdateRequest {
 
     @NotBlank(message = "제목은 필수입니다.")
     private String title;
@@ -25,6 +19,6 @@ public class StudyCreateRequest {
     @NotBlank(message = "카테고리는 필수입니다.")
     private String category;
 
-    @Min(value = 1, message = "최소 인원은 1명 이상이어야 합니다.")
+    @Min(value = 1, message = "최대 인원은 1 이상이어야 합니다.")
     private int maxMembers;
 }

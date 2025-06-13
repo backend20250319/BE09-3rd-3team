@@ -1,9 +1,9 @@
-package com.ohgiraffers.studyservice.controller;
+package com.ohgiraffers.studyservice.study.controller;
 
-import com.ohgiraffers.studyservice.dto.StudyCreateRequest;
-import com.ohgiraffers.studyservice.dto.StudyResponse;
-import com.ohgiraffers.studyservice.dto.StudyUpdateRequest;
-import com.ohgiraffers.studyservice.service.StudyService;
+import com.ohgiraffers.studyservice.study.dto.StudyCreateRequest;
+import com.ohgiraffers.studyservice.study.dto.StudyResponse;
+import com.ohgiraffers.studyservice.study.dto.StudyUpdateRequest;
+import com.ohgiraffers.studyservice.study.service.StudyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

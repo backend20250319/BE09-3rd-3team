@@ -1,4 +1,4 @@
-package com.ohgiraffers.studyservice.entity;
+package com.ohgiraffers.studyservice.study.entity;
 
 public enum ParticipationStatus {
     PENDING,

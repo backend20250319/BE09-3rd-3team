@@ -1,4 +1,4 @@
-package com.ohgiraffers.studyservice.security;
+package com.ohgiraffers.studyservice.study.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

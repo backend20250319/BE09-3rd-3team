@@ -1,9 +1,9 @@
-package com.ohgiraffers.studyservice.controller;
+package com.ohgiraffers.studyservice.study.controller;
 
-import com.ohgiraffers.studyservice.dto.StudyApplyRequest;
-import com.ohgiraffers.studyservice.dto.StudyParticipantSummaryResponse;
-import com.ohgiraffers.studyservice.entity.StudyParticipant;
-import com.ohgiraffers.studyservice.service.StudyParticipantService;
+import com.ohgiraffers.studyservice.study.dto.StudyApplyRequest;
+import com.ohgiraffers.studyservice.study.dto.StudyParticipantSummaryResponse;
+import com.ohgiraffers.studyservice.study.entity.StudyParticipant;
+import com.ohgiraffers.studyservice.study.service.StudyParticipantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
