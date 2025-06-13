@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface StudyParticipantRepository extends JpaRepository<StudyParticipant, Long> {
 
-    // ✅ 특정 스터디의 특정 상태인 참가자 조회
+    // 특정 스터디의 특정 상태인 참가자 조회
     List<StudyParticipant> findByStudy_StudyRoomIdAndStatus(Long studyRoomId, ParticipationStatus status);
 }

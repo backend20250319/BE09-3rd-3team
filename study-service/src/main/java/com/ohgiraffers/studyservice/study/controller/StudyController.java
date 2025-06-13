@@ -24,13 +24,11 @@ public class StudyController {
     // 스터디 개설
     @PostMapping("/create")
     public ResponseEntity<StudyResponse> createStudy(@Valid @RequestBody StudyCreateRequest request) {
-        // 1) 스터디 저장
+        // 스터디 저장
         StudyResponse response = studyService.createStudy(request);
 
-        // 2) 스터디 상태 테이블에 추가
+        // 스터디 상태 테이블에 추가
         studyStatusService.createStudyStatusWithId(response.getStudyRoomId());
-
-        // 201 Created + Location 헤더
         URI location = URI.create("/study/search/" + response.getStudyRoomId());
         return ResponseEntity.created(location).body(response);
     }

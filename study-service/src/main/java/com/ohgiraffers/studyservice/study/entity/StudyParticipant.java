@@ -17,7 +17,7 @@ public class StudyParticipant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // ✅ Study 엔티티와 다대일 관계 설정
+    // Study 엔티티와 다대일 관계 설정
     @ManyToOne
     @JoinColumn(name = "study_id")
     private Study study;

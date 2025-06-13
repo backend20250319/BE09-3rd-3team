@@ -1,8 +1,7 @@
 package com.ohgiraffers.studyservice.study.exception;
 
-/**
- * 요청한 스터디 상태 레코드(ID, userId 등)를 찾을 수 없을 때 던집니다.
- */
+// 요청한 스터디 상태 레코드(ID, userId 등)를 찾을 수 없을 때 던집니다.
+
 public class StudyStatusNotFoundException extends RuntimeException {
 
     // ID 기반 조회 실패
