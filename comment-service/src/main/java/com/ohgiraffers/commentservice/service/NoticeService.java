@@ -24,13 +24,14 @@ public class NoticeService {
     }
 
     @Transactional
-    public void update(Long id, NoticeRequestDto dto) {
+    public Notice update(Long id, NoticeRequestDto dto) {
         Notice notice = noticeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("공지사항이 존재하지 않습니다: id = " + id));
 
         notice.setTitle(dto.getTitle());
         notice.setContent(dto.getContent());
         noticeRepository.save(notice);
+        return notice;
     }
 
     @Transactional
