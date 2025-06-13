@@ -1,5 +1,6 @@
 server:
-  port: 0
+  port: 8877
+
 
 eureka:
   instance:
@@ -15,11 +16,7 @@ eureka:
 spring:
   application:
     name: study-service
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://mysql.coffit.xyz:3322/studyitdb
-    username: studyit
-    password: q0ZuPwM675dzjgBvG5gF
+
   jpa:
     hibernate:
       ddl-auto: create
@@ -27,3 +24,4 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
