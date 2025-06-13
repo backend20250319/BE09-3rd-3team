@@ -3,12 +3,9 @@ package io.studyit.userservice.user.security;
 import io.studyit.userservice.user.entity.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
-
 
 
 @Getter
@@ -25,7 +22,6 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // 권한이 없다면 빈 리스트 반환
         return java.util.Collections.emptyList();
     }
 

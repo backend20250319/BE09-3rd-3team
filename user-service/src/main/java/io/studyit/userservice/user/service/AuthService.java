@@ -1,11 +1,12 @@
-package io.studyit.userservice.auth.service;
+package io.studyit.userservice.user.service;
 
-import io.studyit.userservice.auth.dto.LoginRequest;
-import io.studyit.userservice.auth.dto.TokenResponse;
-import io.studyit.userservice.auth.entity.RefreshToken;
-import io.studyit.userservice.auth.repository.RefreshTokenRepository;
 import io.studyit.userservice.jwt.JwtTokenProvider;
+import io.studyit.userservice.user.dto.LoginRequest;
+import io.studyit.userservice.user.dto.SignupRequest;
+import io.studyit.userservice.user.dto.TokenResponse;
+import io.studyit.userservice.user.entity.RefreshToken;
 import io.studyit.userservice.user.entity.User;
+import io.studyit.userservice.user.repository.RefreshTokenRepository;
 import io.studyit.userservice.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -22,6 +23,21 @@ public class AuthService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
+
+    public String signup(SignupRequest request) {
+        if (userRepository.existsByUserId(request.getUserId())) {
+            throw new IllegalArgumentException("중복 회원은 가입할 수 없습니다.");
+        }
+
+        User user = User.builder()
+                .userId(request.getUserId())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .build();
+
+        userRepository.save(user);
+
+        return "회원가입이 완료되었습니다.";
+    }
 
     public TokenResponse login(LoginRequest request) {
 
