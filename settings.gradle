@@ -1,7 +1,11 @@
 rootProject.name = 'StudyIt'
+
 include 'config-server'
 include 'discovery-server'
 include 'gateway'
-include 'study-service'
+
 include 'user-service'
+include 'study-service'
+include 'comment-service'
+
 include 'jwt-common'

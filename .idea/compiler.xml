@@ -7,6 +7,7 @@
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.38/57f8f5e02e92a30fd21b80cbd426a4172b5f8e29/lombok-1.18.38.jar" />
         </processorPath>
+        <module name="StudyIt.comment-service.main" />
         <module name="StudyIt.jwt-common.test" />
         <module name="StudyIt.study-service.main" />
         <module name="StudyIt.user-service.main" />
@@ -21,6 +22,24 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="17">
+      <module name="BE09-3rd-3team.config-server" target="17" />
+      <module name="BE09-3rd-3team.config-server.main" target="17" />
+      <module name="BE09-3rd-3team.config-server.test" target="17" />
+      <module name="BE09-3rd-3team.discovery-server" target="17" />
+      <module name="BE09-3rd-3team.discovery-server.main" target="17" />
+      <module name="BE09-3rd-3team.discovery-server.test" target="17" />
+      <module name="BE09-3rd-3team.gateway" target="17" />
+      <module name="BE09-3rd-3team.gateway.main" target="17" />
+      <module name="BE09-3rd-3team.gateway.test" target="17" />
+      <module name="BE09-3rd-3team.jwt-common" target="17" />
+      <module name="BE09-3rd-3team.jwt-common.main" target="17" />
+      <module name="BE09-3rd-3team.jwt-common.test" target="17" />
+      <module name="BE09-3rd-3team.study-service" target="17" />
+      <module name="BE09-3rd-3team.study-service.main" target="17" />
+      <module name="BE09-3rd-3team.study-service.test" target="17" />
+      <module name="BE09-3rd-3team.user-service" target="17" />
+      <module name="BE09-3rd-3team.user-service.main" target="17" />
+      <module name="BE09-3rd-3team.user-service.test" target="17" />
       <module name="config-server" target="17" />
       <module name="config-server.main" target="17" />
       <module name="config-server.test" target="17" />
@@ -58,6 +77,9 @@
       <module name="BE09-3rd-3team.user-service" options="-parameters" />
       <module name="BE09-3rd-3team.user-service.main" options="-parameters" />
       <module name="BE09-3rd-3team.user-service.test" options="-parameters" />
+      <module name="StudyIt.comment-service" options="-parameters" />
+      <module name="StudyIt.comment-service.main" options="-parameters" />
+      <module name="StudyIt.comment-service.test" options="-parameters" />
       <module name="StudyIt.config-server" options="-parameters" />
       <module name="StudyIt.config-server.main" options="-parameters" />
       <module name="StudyIt.config-server.test" options="-parameters" />
