@@ -20,7 +20,7 @@ public class StudyStatusController {
         StudyStatusRecord record = studyStatusService.createStudyStatus();
         StudyStatusResponse dto = StudyStatusResponse.builder()
                 .studyRoomId(record.getStudyRoomId())
-                .userId(record.getUserId())
+                .userId(record.getOrganizerId())
                 .status(record.getStatus())
                 .build();
         return ResponseEntity.ok(dto);
@@ -32,19 +32,19 @@ public class StudyStatusController {
         StudyStatusRecord record = studyStatusService.getStudyStatusById(id);
         StudyStatusResponse dto = StudyStatusResponse.builder()
                 .studyRoomId(record.getStudyRoomId())
-                .userId(record.getUserId())
+                .userId(record.getOrganizerId())
                 .status(record.getStatus())
                 .build();
         return ResponseEntity.ok(dto);
     }
 
-    // userId로 조회
-    @GetMapping("search/user/{userId}")
-    public ResponseEntity<StudyStatusResponse> getByUser(@PathVariable String userId) {
-        StudyStatusRecord record = studyStatusService.getByUserId(userId);
+    // organizerId로 조회
+    @GetMapping("search/user/{organizerId}")
+    public ResponseEntity<StudyStatusResponse> getByUser(@PathVariable String organizerId) {
+        StudyStatusRecord record = studyStatusService.getByUserId(organizerId);
         StudyStatusResponse dto = StudyStatusResponse.builder()
                 .studyRoomId(record.getStudyRoomId())
-                .userId(record.getUserId())
+                .userId(record.getOrganizerId())
                 .status(record.getStatus())
                 .build();
         return ResponseEntity.ok(dto);

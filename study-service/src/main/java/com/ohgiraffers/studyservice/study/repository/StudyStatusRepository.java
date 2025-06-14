@@ -9,6 +9,6 @@ import java.util.Optional;
 @Repository
 public interface StudyStatusRepository extends JpaRepository<StudyStatusRecord, Long> {
 
-    // userId로 레코드를 조회하기 위한 메서드
-    Optional<StudyStatusRecord> findByUserId(String userId);
+    // organizeId로 레코드를 조회하기 위한 메서드
+    Optional<StudyStatusRecord> findByOrganizerId(String organizerId);
 }

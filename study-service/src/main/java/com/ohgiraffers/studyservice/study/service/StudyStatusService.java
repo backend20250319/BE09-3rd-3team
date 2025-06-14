@@ -18,10 +18,10 @@ public class StudyStatusService {
 
     private final StudyStatusRepository studyStatusRepository;
 
-// userId는 고정값 "2", status는 OPEN으로 초기화
+// organizerId는 고정값 "2", status는 OPEN으로 초기화
     public StudyStatusRecord createStudyStatus() {
         StudyStatusRecord record = StudyStatusRecord.builder()
-                .build(); // @PrePersist에서 userId 및 status가 설정됨
+                .build(); // @PrePersist에서 organizerId 및 status가 설정됨
         return studyStatusRepository.save(record);
     }
 
@@ -29,7 +29,7 @@ public class StudyStatusService {
 //  @param ignored 무시되는 파라미터
     public StudyStatusRecord createStudyStatusWithId(Long ignored) {
         StudyStatusRecord record = StudyStatusRecord.builder()
-                .build(); // @PrePersist에서 userId 및 status 설정
+                .build(); // @PrePersist에서 organizerId 및 status 설정
         return studyStatusRepository.save(record);
     }
 
@@ -44,13 +44,13 @@ public class StudyStatusService {
     }
 
 
-//     * 주어진 userId에 해당하는 스터디 상태 레코드를 조회
-//     * @param userId 스터디 개설자 ID
+//     * 주어진 organizerId에 해당하는 스터디 상태 레코드를 조회
+//     * @param organizerId 스터디 개설자 ID
     @Transactional(readOnly = true)
-    public StudyStatusRecord getByUserId(String userId) {
-        return studyStatusRepository.findByUserId(userId)
+    public StudyStatusRecord getByUserId(String organizerId) {
+        return studyStatusRepository.findByOrganizerId(organizerId)
                 .orElseThrow(() -> new StudyStatusNotFoundException(
-                        "userId='" + userId + "'인 레코드를 찾을 수 없습니다."));
+                        "userId='" + organizerId + "'인 레코드를 찾을 수 없습니다."));
     }
 
 

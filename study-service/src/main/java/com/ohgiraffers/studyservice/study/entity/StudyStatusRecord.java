@@ -16,8 +16,8 @@ public class StudyStatusRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long studyRoomId;   // PK
 
-    @Column(name = "user_id", nullable = false)
-    private String userId;      // 고정값 "2"
+    @Column(name = "organizer_id", nullable = false)
+    private String organizerId;      // 고정값 "2"
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -25,7 +25,7 @@ public class StudyStatusRecord {
 
     @PrePersist
     protected void onCreate() {
-        this.userId = "2";               // 생성 시 고정값
+        this.organizerId = "2";               // 생성 시 고정값
         if (this.status == null) {
             this.status = StudyStatus.OPEN;  // 기본 상태 설정
         }
