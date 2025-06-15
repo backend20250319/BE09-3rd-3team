@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/study/statuses")
 @RequiredArgsConstructor
@@ -14,7 +17,7 @@ public class StudyStatusController {
 
     private final StudyStatusService studyStatusService;
 
-    // 새 레코드 생성 (organizerId="3", userId="2", status=OPEN)
+    // 새 레코드 생성 (organizerId="3", status=OPEN)
     @PostMapping
     public ResponseEntity<StudyStatusResponse> create() {
         StudyStatusRecord record = studyStatusService.createStudyStatus();
@@ -27,7 +30,7 @@ public class StudyStatusController {
         return ResponseEntity.ok(dto);
     }
 
-    /** ID로 조회 */
+    // ID로 조회
     @GetMapping("search/id/{id}")
     public ResponseEntity<StudyStatusResponse> getById(@PathVariable Long id) {
         StudyStatusRecord record = studyStatusService.getStudyStatusById(id);
@@ -40,7 +43,7 @@ public class StudyStatusController {
         return ResponseEntity.ok(dto);
     }
 
-    /** organizerId로 조회 */
+    // organizerId로 조회
     @GetMapping("search/user/{organizerId}")
     public ResponseEntity<StudyStatusResponse> getByUser(@PathVariable String organizerId) {
         StudyStatusRecord record = studyStatusService.getByUserId(organizerId);
@@ -51,5 +54,47 @@ public class StudyStatusController {
                 .status(record.getStatus())
                 .build();
         return ResponseEntity.ok(dto);
+    }
+
+    // ✅ userId로 전체 상태 조회
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<StudyStatusResponse>> getAllByUserId(@PathVariable String userId) {
+        List<StudyStatusResponse> list = studyStatusService.getAllByUserId(userId).stream()
+                .map(record -> StudyStatusResponse.builder()
+                        .studyRoomId(record.getStudyRoomId())
+                        .organizerId(record.getOrganizerId())
+                        .userId(record.getUserId())
+                        .status(record.getStatus())
+                        .build())
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(list);
+    }
+
+    // ✅ userId로 OPEN 상태만 조회
+    @GetMapping("/user/{userId}/open")
+    public ResponseEntity<List<StudyStatusResponse>> getOpenByUserId(@PathVariable String userId) {
+        List<StudyStatusResponse> list = studyStatusService.getAllOpenByUserId(userId).stream()
+                .map(record -> StudyStatusResponse.builder()
+                        .studyRoomId(record.getStudyRoomId())
+                        .organizerId(record.getOrganizerId())
+                        .userId(record.getUserId())
+                        .status(record.getStatus())
+                        .build())
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(list);
+    }
+
+    // ✅ userId로 CLOSED 상태만 조회
+    @GetMapping("/user/{userId}/closed")
+    public ResponseEntity<List<StudyStatusResponse>> getClosedByUserId(@PathVariable String userId) {
+        List<StudyStatusResponse> list = studyStatusService.getAllClosedByUserId(userId).stream()
+                .map(record -> StudyStatusResponse.builder()
+                        .studyRoomId(record.getStudyRoomId())
+                        .organizerId(record.getOrganizerId())
+                        .userId(record.getUserId())
+                        .status(record.getStatus())
+                        .build())
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(list);
     }
 }

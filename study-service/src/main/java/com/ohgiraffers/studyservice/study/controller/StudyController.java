@@ -24,13 +24,14 @@ public class StudyController {
     /** 스터디 개설 */
     @PostMapping("/create")
     public ResponseEntity<StudyResponse> createStudy(
-            @Valid @RequestBody StudyCreateRequest request) {
+            @Valid @RequestBody StudyCreateRequest request,
+            @RequestHeader("X-User-Id") String userId) {
 
         // 1) 스터디 저장
         StudyResponse response = studyService.createStudy(request);
 
-        // 2) 스터디 상태 테이블에 추가 (서비스 레이어가 userId를 자동 주입)
-        studyStatusService.createStudyStatusWithId(response.getStudyRoomId());
+        // 2) 스터디 상태 테이블에 userId만 넘겨 저장 (studyRoomId는 자동 생성됨)
+        studyStatusService.createStudyStatusWithUserId(userId);
 
         // 3) Location 헤더 설정 후 응답
         URI location = URI.create("/study/search/" + response.getStudyRoomId());
