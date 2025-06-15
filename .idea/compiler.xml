@@ -10,9 +10,9 @@
         <module name="StudyIt.comment-service.main" />
         <module name="StudyIt.jwt-common.test" />
         <module name="StudyIt.gateway.main" />
-        <module name="StudyIt.study-service.main" />
-        <module name="StudyIt.user-service.main" />
+        <module name="io.studyit.StudyIt.user-service.main" />
         <module name="StudyIt.gateway.test" />
+        <module name="com.ohgiraffers.StudyIt.study-service.main" />
       </profile>
       <profile name="Gradle Imported" enabled="true">
         <outputRelativeToContentRoot value="true" />
@@ -20,13 +20,10 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-configuration-processor/3.5.0/571cee41914166d639c56eac7d80fb35e8201325/spring-boot-configuration-processor-3.5.0.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.38/57f8f5e02e92a30fd21b80cbd426a4172b5f8e29/lombok-1.18.38.jar" />
         </processorPath>
-        <module name="StudyIt.jwt-common.main" />
+        <module name="io.studyit.StudyIt.jwt-common.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="17">
-      <module name="commentservice" target="17" />
-      <module name="commentservice.main" target="17" />
-      <module name="commentservice.test" target="17" />
       <module name="config-server" target="17" />
       <module name="config-server.main" target="17" />
       <module name="config-server.test" target="17" />

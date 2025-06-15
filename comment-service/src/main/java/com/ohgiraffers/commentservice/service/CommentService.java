@@ -50,8 +50,6 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-
-
     @Transactional
     // 댓글 삭제
     public void delete(Long id) {
