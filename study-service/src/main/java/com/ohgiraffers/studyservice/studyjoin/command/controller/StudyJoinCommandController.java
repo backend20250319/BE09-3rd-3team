@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.NoSuchElementException;
+
 @RestController
 @RequestMapping("/study")
 @RequiredArgsConstructor
@@ -16,7 +18,6 @@ public class StudyJoinCommandController {
 
     private final StudyJoinService studyJoinService;
 
-    // 스터디 참여 신청
     @PostMapping("/join")
     public ResponseEntity<ApiResponse<String>> joinStudy(
             @AuthenticationPrincipal String userId,
@@ -24,15 +25,18 @@ public class StudyJoinCommandController {
 
         try {
             studyJoinService.joinStudy(requestDTO, userId);
-            String message = "스터디 참여 신청이 완료되었습니다.";
             return ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body(ApiResponse.success(message));
+                    .body(ApiResponse.success("스터디 참여 신청이 완료되었습니다."));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(ApiResponse.failure("STUDY_NOT_FOUND", e.getMessage()));
         } catch (IllegalArgumentException e) {
-            String errMsg = "이미 신청한 스터디 입니다.";
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
-                    .body(ApiResponse.failure("DUPLICATE_STUDY", errMsg));
+                    .body(ApiResponse.failure("DUPLICATE_STUDY", e.getMessage()));
         }
     }
 }
+

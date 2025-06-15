@@ -1,18 +1,20 @@
 package com.ohgiraffers.studyservice.studyjoin.command.entity;
 
+import com.ohgiraffers.studyservice.study.entity.Study;
 import com.ohgiraffers.studyservice.studyjoin.command.dto.StudyJoinRequestDTO;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "tbl_study_join")
 @Getter
 @Setter
-@Entity
 @NoArgsConstructor
-@Table(name = "tbl_study_join")
 public class StudyJoinEntity {
 
     @Id
@@ -22,8 +24,9 @@ public class StudyJoinEntity {
     @Column(name = "user_id")
     private String userId;
 
-    @Column(name = "study_room_id")
-    private Long studyRoomId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "study_room_id")
+    private Study study;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -37,13 +40,25 @@ public class StudyJoinEntity {
         REJECTED
     }
 
+    @Builder
+    public StudyJoinEntity(String userId, Study study, Status status, LocalDateTime createdAt) {
+        this.userId = userId;
+        this.study = study;
+        this.status = status;
+        this.createdAt = createdAt;
+    }
+
     public static StudyJoinEntity of(StudyJoinRequestDTO dto, String userId, LocalDateTime now) {
-        StudyJoinEntity entity = new StudyJoinEntity();
-        entity.setUserId(userId);
-        entity.setStudyRoomId(dto.getStudyRoomId());
-        entity.setStatus(Status.PENDING);
-        entity.setCreatedAt(now);
-        return entity;
+        Study study = new Study();
+        study.setStudyRoomId(dto.getStudyRoomId());
+
+        return StudyJoinEntity.builder()
+                .userId(userId)
+                .study(study)
+                .status(Status.PENDING)
+                .createdAt(now)
+                .build();
     }
 }
+
 
