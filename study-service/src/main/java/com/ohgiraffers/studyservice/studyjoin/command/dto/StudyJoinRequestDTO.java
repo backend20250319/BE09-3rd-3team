@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 public class StudyJoinRequestDTO {
 
-    private Long studyId;
+    private Long studyRoomId;
 
 }
