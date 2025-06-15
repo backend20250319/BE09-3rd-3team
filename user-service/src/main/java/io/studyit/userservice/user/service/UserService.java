@@ -11,10 +11,12 @@ import io.studyit.userservice.user.repository.RefreshTokenRepository;
 import io.studyit.userservice.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,27 +27,20 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public String signup(SignupRequest request) {
-        if (userRepository.existsByUserId(request.getUserId())) {
-            throw new IllegalArgumentException("중복 회원은 가입할 수 없습니다.");
-        }
-
-        User user = User.builder()
-                .userId(request.getUserId())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .build();
-
-        userRepository.save(user);
-
-        return "회원가입이 완료되었습니다.";
-    }
 
     public TokenResponse login(LoginRequest request) {
 
-        User user = userRepository.findByUserId(request.getUserId())
-                .filter(u -> passwordEncoder.matches(request.getPassword(), u.getPassword()))
-                .orElseThrow(() -> new BadCredentialsException("올바르지 않은 아이디 혹은 비밀번호입니다."));
+        Optional<User> userOptional = userRepository.findByUserId(request.getUserId());
 
+        if (userOptional.isEmpty()) {
+            throw new UsernameNotFoundException("존재하지 않는 사용자입니다.");
+        }
+
+        User user = userOptional.get();
+
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new BadCredentialsException("아이디 혹은 비밀번호가 올바르지 않습니다.");
+        }
 
         String accessToken = jwtTokenProvider.createToken(user.getUserId());
         String refreshToken = jwtTokenProvider.createRefreshToken(user.getUserId());
@@ -53,10 +48,7 @@ public class UserService {
         RefreshToken tokenEntity = RefreshToken.builder()
                 .userId(user.getUserId())
                 .token(refreshToken)
-                .expiryDate(
-                        new Date(System.currentTimeMillis()
-                                + jwtTokenProvider.getRefreshExpiration())
-                )
+                .expiryDate(new Date(System.currentTimeMillis() + jwtTokenProvider.getRefreshExpiration()))
                 .build();
 
         refreshTokenRepository.save(tokenEntity);
@@ -66,6 +58,7 @@ public class UserService {
                 .refreshToken(refreshToken)
                 .build();
     }
+
 
     public TokenResponse refreshToken(String providedRefreshToken) {
         JwtPayload payload = jwtTokenProvider.getPayloadFromToken(providedRefreshToken);

@@ -62,4 +62,12 @@ public class UserController {
         userCommandService.changeName(userId, request, userDetails);
         return ResponseEntity.ok(ApiResponse.successWithMessage("이름이 성공적으로 변경되었습니다."));
     }
+
+    @DeleteMapping("/{userId}/delete")
+    public ResponseEntity<ApiResponse<Void>> deleteUser(
+            @PathVariable String userId,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        userCommandService.deleteUser(userId, userDetails);
+        return ResponseEntity.ok(ApiResponse.successWithMessage("회원 탈퇴가 완료되었습니다."));
+    }
 }
