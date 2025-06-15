@@ -8,5 +8,7 @@ import java.util.List;
 
 public interface StudyJoinRepository extends JpaRepository<StudyJoinEntity, Long> {
     boolean existsByUserIdAndStudy(String userId, Study study);
+
+    List<StudyJoinEntity> findByUserId(String userId);
 }
 

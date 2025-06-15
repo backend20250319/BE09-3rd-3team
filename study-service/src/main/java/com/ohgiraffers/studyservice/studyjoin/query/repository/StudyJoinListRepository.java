@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface StudyJoinListRepository extends JpaRepository<StudyJoinListEntity, Long> {
-    List<StudyJoinListEntity> findByUserId(Long userId);
+public interface StudyJoinListRepository extends JpaRepository<StudyJoinListEntity, String > {
+    List<StudyJoinListEntity> findByUserId(String  userId);
 }
