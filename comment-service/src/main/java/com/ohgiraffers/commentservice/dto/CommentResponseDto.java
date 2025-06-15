@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 public class CommentResponseDto {
     private Long postId;
+    private Long parentId;
     private String createdUserId;
     private String content;
     private LocalDateTime createdTime;
@@ -18,6 +19,7 @@ public class CommentResponseDto {
     public static CommentResponseDto fromEntity(Comment comment) {
         CommentResponseDto dto = new CommentResponseDto();
         dto.setPostId(comment.getPostId());
+        dto.setParentId(comment.getParentId());
         dto.setCreatedUserId(comment.getCreatedUserId());
         dto.setContent(comment.getContent());
         dto.setCreatedTime(comment.getCreatedTime());

@@ -11,12 +11,14 @@ public class CommentRequestDto {
     private String content;
     private String createdUserId;  // 작성자 ID
     private String createdUserName;
+    private Long parentId;
 
     public Comment toEntity() {
         return Comment.builder()
                 .postId(postId)
                 .createdUserId(createdUserId)
                 .content(content)
+                .parentId(parentId)
                 .build();
     }
 }

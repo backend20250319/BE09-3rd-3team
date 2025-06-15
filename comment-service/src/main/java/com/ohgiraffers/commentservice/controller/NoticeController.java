@@ -16,8 +16,7 @@ public class NoticeController {
 
     // ✅ 공지사항 작성
     @PostMapping("/{studyRoomId}")
-    public ResponseEntity<String> create(@PathVariable Long studyRoomId,
-                                         @RequestBody NoticeRequestDto dto) {
+    public ResponseEntity<String> create(@PathVariable Long studyRoomId, @RequestBody NoticeRequestDto dto) {
         try {
             if (dto.getTitle() == null || dto.getTitle().trim().isEmpty() ||
                     dto.getContent() == null || dto.getContent().trim().isEmpty()) {
@@ -40,8 +39,7 @@ public class NoticeController {
 
     // ✅ 공지사항 수정
     @PutMapping("/{noticeId}")
-    public ResponseEntity<String> update(@PathVariable Long noticeId,
-                                         @RequestBody NoticeRequestDto dto) {
+    public ResponseEntity<String> update(@PathVariable Long noticeId, @RequestBody NoticeRequestDto dto) {
         try {
             Notice updatedNotice = noticeService.update(noticeId, dto);
 

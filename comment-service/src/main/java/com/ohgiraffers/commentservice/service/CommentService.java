@@ -1,6 +1,5 @@
 package com.ohgiraffers.commentservice.service;
 
-//import com.ohgiraffers.commentservice.client.UserClient;
 import com.ohgiraffers.commentservice.dto.CommentRequestDto;
 import com.ohgiraffers.commentservice.entity.Comment;
 import com.ohgiraffers.commentservice.repository.CommentRepository;
@@ -8,16 +7,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-
-
 public class CommentService {
-    // 댓글 등록
+
     private final CommentRepository commentRepository;
-//    private final UserClient userClient;
 
     @Transactional
     public Comment create(CommentRequestDto dto) {
@@ -25,13 +22,31 @@ public class CommentService {
             throw new IllegalArgumentException("댓글 내용이 비어있습니다. 댓글을 적어주세요!");
         }
 
-        // 유저 이름을 외부에서 받아올 경우 사용
-        // UserDto userDto = userClient.getUserById(dto.getCreatedUserId());
-        // dto.setCreatedUserName(userDto.getName());
-        Comment savedComment = commentRepository.save(dto.toEntity());
-        return savedComment;
+        // 대댓글일 경우 부모 댓글 유효성 확인
+        if (dto.getParentId() != null) {
+            Optional<Comment> parentComment = commentRepository.findById(dto.getParentId());
+            if (parentComment.isEmpty()) {
+                throw new IllegalArgumentException("부모 댓글이 존재하지 않습니다: id = " + dto.getParentId());
+            }
+        }
+
+        return commentRepository.save(dto.toEntity());
     }
 
+    @Transactional
+    public Comment createReply(Long parentId, CommentRequestDto dto) {
+        Optional<Comment> parentComment = commentRepository.findById(parentId);
+        if (parentComment.isEmpty()) {
+            throw new IllegalArgumentException("부모 댓글이 존재하지 않습니다: id = " + parentId);
+        }
+
+        if (dto.getContent() == null || dto.getContent().trim().isEmpty()) {
+            throw new IllegalArgumentException("대댓글 내용이 비어있습니다. 내용을 입력해주세요!");
+        }
+
+        dto.setParentId(parentId);
+        return commentRepository.save(dto.toEntity());
+    }
 
     @Transactional
     public Comment update(Long id, CommentRequestDto dto) {
@@ -51,11 +66,14 @@ public class CommentService {
     }
 
     @Transactional
-    // 댓글 삭제
     public void delete(Long id) {
         if (!commentRepository.existsById(id)) {
             throw new IllegalArgumentException("댓글이 존재하지 않습니다: id = " + id);
         }
         commentRepository.deleteById(id);
+    }
+
+    public List<Comment> getCommentsByPostId(Long postId) {
+        return commentRepository.findByPostId(postId);
     }
 }
