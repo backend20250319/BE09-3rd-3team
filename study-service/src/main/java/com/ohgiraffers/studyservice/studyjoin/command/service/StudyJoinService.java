@@ -41,5 +41,27 @@ public class StudyJoinService {
 
         studyJoinRepository.save(entity);
     }
+
+    // 스터디 참가 신청 취소
+    public String cancelJoinStudy(Long studyRoomId, String userId) {
+        // 1. 스터디 확인
+        Study study = studyRepository.findByStudyRoomId(studyRoomId)
+                .orElseThrow(() -> new NoSuchElementException("스터디 ID : " + studyRoomId + "에 해당하는 스터디가 없습니다."));
+
+        // 2. 신청 내역 확인
+        StudyJoinEntity joinEntity = studyJoinRepository.findByUserIdAndStudy(userId, study)
+                .orElseThrow(() -> new NoSuchElementException("해당 유저는 이 스터디에 신청한 내역이 없습니다."));
+
+        // 3. 상태 확인
+        if (joinEntity.getStatus() != StudyJoinEntity.Status.PENDING) {
+            throw new IllegalStateException("대기 상태(PENDING)인 신청만 취소할 수 있습니다.");
+        }
+
+        // 4. 신청 취소 (삭제 또는 상태 변경)
+        studyJoinRepository.delete(joinEntity);
+
+        return "스터디 신청이 성공적으로 취소되었습니다.";
+    }
+
 }
 

@@ -18,6 +18,7 @@ public class StudyJoinCommandController {
 
     private final StudyJoinService studyJoinService;
 
+    // 스터디 참가 신청
     @PostMapping("/join")
     public ResponseEntity<ApiResponse<String>> joinStudy(
             @AuthenticationPrincipal String userId,
@@ -38,5 +39,25 @@ public class StudyJoinCommandController {
                     .body(ApiResponse.failure("DUPLICATE_STUDY", e.getMessage()));
         }
     }
+
+    // 스터치 참가 신청 취소
+    // 스터디 참가 신청 취소
+    @DeleteMapping("/cancel/{studyRoomId}")
+    public ResponseEntity<ApiResponse<String>> cancelStudyJoin(@PathVariable Long studyRoomId,
+                                                               @AuthenticationPrincipal String userId) {
+        try {
+            String resultMessage = studyJoinService.cancelJoinStudy(studyRoomId, userId);
+            return ResponseEntity.ok(ApiResponse.success(resultMessage));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(ApiResponse.failure("STUDY_NOT_FOUND", e.getMessage()));
+        } catch (IllegalStateException e) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(ApiResponse.failure("INVALID_STATUS", e.getMessage()));
+        }
+    }
+
 }
 

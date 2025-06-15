@@ -37,7 +37,8 @@ public class StudyJoinEntity {
     public enum Status {
         PENDING,
         APPROVED,
-        REJECTED
+        REJECTED,
+        CANCELLED
     }
 
     @Builder
