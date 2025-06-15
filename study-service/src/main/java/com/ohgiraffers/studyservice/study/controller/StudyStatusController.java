@@ -14,37 +14,40 @@ public class StudyStatusController {
 
     private final StudyStatusService studyStatusService;
 
-//  새 레코드 생성 (userId="2", status=OPEN)
+    // 새 레코드 생성 (organizerId="3", userId="2", status=OPEN)
     @PostMapping
     public ResponseEntity<StudyStatusResponse> create() {
         StudyStatusRecord record = studyStatusService.createStudyStatus();
         StudyStatusResponse dto = StudyStatusResponse.builder()
                 .studyRoomId(record.getStudyRoomId())
-                .userId(record.getOrganizerId())
+                .organizerId(record.getOrganizerId())
+                .userId(record.getUserId())
                 .status(record.getStatus())
                 .build();
         return ResponseEntity.ok(dto);
     }
 
-    // ID로 조회
+    /** ID로 조회 */
     @GetMapping("search/id/{id}")
     public ResponseEntity<StudyStatusResponse> getById(@PathVariable Long id) {
         StudyStatusRecord record = studyStatusService.getStudyStatusById(id);
         StudyStatusResponse dto = StudyStatusResponse.builder()
                 .studyRoomId(record.getStudyRoomId())
-                .userId(record.getOrganizerId())
+                .organizerId(record.getOrganizerId())
+                .userId(record.getUserId())
                 .status(record.getStatus())
                 .build();
         return ResponseEntity.ok(dto);
     }
 
-    // organizerId로 조회
+    /** organizerId로 조회 */
     @GetMapping("search/user/{organizerId}")
     public ResponseEntity<StudyStatusResponse> getByUser(@PathVariable String organizerId) {
         StudyStatusRecord record = studyStatusService.getByUserId(organizerId);
         StudyStatusResponse dto = StudyStatusResponse.builder()
                 .studyRoomId(record.getStudyRoomId())
-                .userId(record.getOrganizerId())
+                .organizerId(record.getOrganizerId())
+                .userId(record.getUserId())
                 .status(record.getStatus())
                 .build();
         return ResponseEntity.ok(dto);
