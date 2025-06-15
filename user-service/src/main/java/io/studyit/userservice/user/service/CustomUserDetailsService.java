@@ -24,7 +24,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userRepository.findByUserId(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with userId: " + userId));
 
-        // 권한이 없다면 빈 리스트로 처리
         List<GrantedAuthority> authorities = Collections.emptyList();
 
         return new UserDetailsImpl(user.getUserId(), authorities);
