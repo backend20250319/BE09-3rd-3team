@@ -55,11 +55,11 @@
 ## 2. 요구사항 정의서
 
 ---
-## 3. 인터페이스 설계서
+## 🧻 3. 인터페이스 설계서
 ### 3-1. API 설계
 
-### 스터디 서비스
-### 📌 스터디 참가 신청 API
+## 📕 스터디 서비스
+### 📕 스터디 참가 신청 API
 ### 📤 요청 정보
 
 - **메서드(Method)**: `POST`
@@ -138,3 +138,83 @@
 - 인증된 사용자만 호출 가능합니다.
 - 이미 신청한 스터디에 다시 신청할 경우 `DUPLICATE_STUDY` 에러가 반환됩니다.
 - `studyRoomId` 값이 존재하는지 백엔드에서 확인합니다.
+
+### 
+
+### 📕 스터디 참가 신청 취소 API
+
+### 📤 요청 정보
+
+- **메서드(Method)**: `DELETE`
+- **URL**: `http://localhost:8080/study/cancel/{id}`
+- **인증 필요**: ✅ `Bearer 토큰` 필요 (로그인 유저 기준)
+
+### 📌 경로 파라미터 (Path Parameter)
+
+| 이름 | 타입 | 필수 | 설명 |
+| --- | --- | --- | --- |
+| id | Long | ✅ | 취소하려는 스터디의 고유 ID (`studyRoomId`) |
+
+예: `DELETE http://localhost:8080/study/cancel/{studyRoomId}`
+
+### ❌ 요청 바디 (Request Body)
+
+- 없음 (Body 없이 요청합니다)
+
+### 📥 응답 정보 (Response)
+
+| 필드명 | 타입 | 설명 |
+| --- | --- | --- |
+| success | boolean | 요청 성공 여부 |
+| data | string | 메시지 또는 결과 데이터 (`성공 시 취소 안내 메시지`) |
+| errorCode | string | 실패 시 에러 코드 (`성공 시 null`) |
+| message | string | 실패 시 상세 메시지 (`성공 시 null`) |
+| timestamp | string | 응답 생성 시간 (ISO-8601 형식) |
+
+### ✅ 성공 응답 예시
+
+```json
+{
+  "success": true,
+  "data": "스터디 신청이 성공적으로 취소되었습니다.",
+  "errorCode": null,
+  "message": null,
+  "timestamp": "2025-06-15T17:50:23.456"
+}
+
+```
+
+---
+
+### ❌ 실패 응답 예시 1 — 신청 내역 없음
+
+```json
+{
+  "success": false,
+  "data": null,
+  "errorCode": "STUDY_NOT_FOUND",
+  "message": "해당 유저는 이 스터디에 신청한 내역이 없습니다.",
+  "timestamp": "2025-06-15T17:51:01.789"
+}
+
+```
+
+---
+
+### ❌ 실패 응답 예시 2 — 상태가 대기(PENDING)가 아님
+
+```json
+{
+  "success": false,
+  "data": null,
+  "errorCode": "INVALID_STATUS",
+  "message": "대기 상태(PENDING)인 신청만 취소할 수 있습니다.",
+  "timestamp": "2025-06-15T17:51:30.000"
+}
+
+```
+### 📝 비고
+
+- 이 API는 로그인한 사용자의 신청 내역 중 `대기 상태(PENDING)`인 것만 취소할 수 있습니다.
+- 승인된 신청(예: `APPROVED`, `REJECTED`)은 취소할 수 없습니다.
+- 스터디 ID는 존재해야 하며, 유효하지 않으면 `STUDY_NOT_FOUND` 오류가 발생합니다.
