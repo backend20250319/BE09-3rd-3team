@@ -1344,4 +1344,79 @@
 </details>
 
 
+<details>
+    <summary>📌 키워드로 스터디룸 검색 API</summary>
+
+### 📤 요청 정보
+
+- **HTTP 메서드**: `GET`
+- **URL**: `http://localhost:8080/study/search/keyword?keyword=JPA`
+- **Content-Type**: 없음 (쿼리 파라미터로 전달)
+- **인증 필요**: ✅ 로그인 필요
+
+### 🔎 쿼리 파라미터 (Query Parameters)
+
+| 이름 | 타입 | 필수 | 설명 |
+| --- | --- | --- | --- |
+| keyword | string | ✅ | 검색 키워드. 제목, 설명, 카테고리 등을 기준으로 검색 |
+
+예시 요청:
+
+`GET http://localhost:8080/study/search/keyword?keyword=스프링`
+
+### 📥 응답 정보
+
+- **성공 시 상태코드**: `200 OK`
+- **Content-Type**: `application/json`
+- **응답 형식**: **스터디룸 객체 배열 (List<StudyRoom>)**
+
+
+### ✅ 성공 응답 예시
+
+```json
+[
+  {
+    "studyRoomId": 21,
+    "title": "기초부터 배우는 JPA",
+    "description": "초보자를 위한 JPA 실전 학습",
+    "organizer": "홍길동",
+    "status": "OPEN",
+    "category": "#백엔드#JPA",
+    "maxMembers": 8,
+    "createdAtFormatted": "2025-06-15 10:30",
+    "closedAtFormatted": null},
+  {
+    "studyRoomId": 22,
+    "title": "JPA 실무 활용",
+    "description": "JPA를 프로젝트에 적용해보는 스터디",
+    "organizer": "김개발",
+    "status": "OPEN",
+    "category": "#JPA#실무",
+    "maxMembers": 12,
+    "createdAtFormatted": "2025-06-01 14:00",
+    "closedAtFormatted": null}
+]
+```
+
+### ❌ 오류 응답 예시
+
+```json
+{
+  "error": "Bad Request",
+  "message": "해당 검색어로 일치하는 스터디가 없습니다.",
+  "timestamp": "2025-06-16T12:30:15.8417562",
+  "status": 400
+}
+```
+
+### 📝 참고 사항
+
+- 검색 키워드는 최소 1자 이상 입력되어야 하며, 미입력 시 `400 Bad Request`가 반환됩니다.
+- 키워드는 스터디룸의 `title`, `description`, `category` 등에 대해 부분 일치 검색으로 적용됩니다.
+- 검색 결과가 없는 경우, 빈 배열 `[]`이 반환됩니다.
+- 검색 결과는 최신 생성순 또는 별도의 정렬 기준으로 반환될 수 있습니다 (정책에 따라 변경 가능).
+    
+</details>
+
+
 ###
