@@ -94,9 +94,10 @@ public class StudyService {
         log.info("스터디가 삭제되었습니다. [postId={}, title={}]", study.getStudyRoomId(), study.getTitle());
     }
 
-    // 제목 또는 카테고리 키워드로 검색
+    // 제목, 카테고리, 주최자 키워드로 검색
     public List<StudyResponse> searchStudiesByKeyword(String keyword) {
         if (keyword == null || keyword.trim().isEmpty()) {
+            log.warn("검색어가 입력되지 않았습니다.");
             throw new IllegalArgumentException("검색어를 입력해주세요.");
         }
 
@@ -105,16 +106,22 @@ public class StudyService {
         List<StudyResponse> result = studyRepository.findAll().stream()
                 .filter(study ->
                         study.getTitle().toLowerCase().contains(lowerKeyword) ||
-                                study.getCategory().toLowerCase().contains(lowerKeyword)
+                                study.getCategory().toLowerCase().contains(lowerKeyword) ||
+                                study.getOrganizer().toLowerCase().contains(lowerKeyword)
                 )
                 .map(StudyResponse::from)
                 .collect(Collectors.toList());
+
+        if (result.isEmpty()) {
+            log.warn("'{}' 키워드로 검색된 결과가 없습니다.", keyword);
+            throw new IllegalArgumentException("해당 검색어로 일치하는 스터디가 없습니다.");
+        }
 
         log.info("'{}' 키워드로 검색된 스터디 {}건", keyword, result.size());
         return result;
     }
 
-    // 스터디 생성, 수정 유효성 검사
+    // 스터디 생성 유효성 검사
     private void validateCreateRequest(StudyCreateRequest request) {
         if (request.getTitle() == null || request.getTitle().trim().isEmpty()) {
             throw new StudyInvalidRequestException("스터디 제목은 필수입니다.");
@@ -127,6 +134,7 @@ public class StudyService {
         }
     }
 
+    // 스터디 수정 유효성 검사
     private void validateUpdateRequest(StudyUpdateRequest request) {
         if (request.getTitle() == null || request.getTitle().trim().isEmpty()) {
             throw new StudyInvalidRequestException("수정할 제목은 비어 있을 수 없습니다.");

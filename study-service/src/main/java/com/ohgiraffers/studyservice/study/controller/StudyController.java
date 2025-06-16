@@ -27,13 +27,9 @@ public class StudyController {
             @Valid @RequestBody StudyCreateRequest request,
             @RequestHeader("X-User-Id") String userId) {
 
-        // 1) 스터디 저장
         StudyResponse response = studyService.createStudy(request);
-
-        // 2) 스터디 상태 테이블에 userId만 넘겨 저장 (studyRoomId는 자동 생성됨)
         studyStatusService.createStudyStatusWithUserId(userId);
 
-        // 3) Location 헤더 설정 후 응답
         URI location = URI.create("/study/search/" + response.getStudyRoomId());
         return ResponseEntity.created(location).body(response);
     }
@@ -75,9 +71,17 @@ public class StudyController {
         return ResponseEntity.noContent().build();
     }
 
-    /** 제목 또는 카테고리 키워드로 검색 */
-    @GetMapping("/search/keyword/{keyword}")
-    public ResponseEntity<List<StudyResponse>> searchStudies(@PathVariable String keyword) {
+    /**
+     * 키워드로 스터디 검색
+     * <p>제목(title), 카테고리(category), 주최자(organizer) 중 하나라도 포함되는 경우 검색 결과로 반환됩니다.</p>
+     * GET /study/search/keyword?keyword=백엔드
+     * <p>쿼리 파라미터 방식(@RequestParam)을 사용하여 공백, 누락 등 예외 처리가 용이하고,
+     * RESTful한 검색 API 형식에 더 적합합니다.</p>
+     * @param keyword 검색 키워드
+     * @return 검색된 스터디 목록
+     */
+    @GetMapping("/search/keyword")
+    public ResponseEntity<List<StudyResponse>> searchStudies(@RequestParam String keyword) {
         return ResponseEntity.ok(studyService.searchStudiesByKeyword(keyword));
     }
 }

@@ -1,5 +1,6 @@
 package com.ohgiraffers.studyservice.study.service;
 
+import com.ohgiraffers.studyservice.study.dto.StudyStatusResponse;
 import com.ohgiraffers.studyservice.study.entity.StudyStatus;
 import com.ohgiraffers.studyservice.study.entity.StudyStatusRecord;
 import com.ohgiraffers.studyservice.study.exception.StudyStatusNotFoundException;
@@ -81,5 +82,18 @@ public class StudyStatusService {
     @Transactional(readOnly = true)
     public List<StudyStatusRecord> getAllClosedByUserId(String userId) {
         return studyStatusRepository.findAllByUserIdAndStatus(userId, StudyStatus.CLOSED);
+    }
+
+    // ✅ 추가: studyRoomId로 organizerId + userId 반환용 응답 DTO 제공
+    @Transactional(readOnly = true)
+    public StudyStatusResponse getStudyInfo(Long studyRoomId) {
+        StudyStatusRecord record = getStudyStatusById(studyRoomId);
+        StudyStatusResponse response = new StudyStatusResponse();
+        response.setStudyRoomId(record.getStudyRoomId());
+        response.setOrganizerId(String.valueOf(record.getOrganizerId()));
+        response.setUserId(record.getUserId());
+        response.setStatus(record.getStatus());
+
+        return response;
     }
 }
