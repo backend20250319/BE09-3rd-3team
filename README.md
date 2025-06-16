@@ -60,7 +60,7 @@
 ## 🧻 3. 인터페이스 설계서
 ### 3-1. API 설계
 
-## 👤 회원가입 서비스
+### 👤 회원가입 서비스
 <details>
     <summary>📌 사용자 회원가입 API</summary>
 
@@ -496,7 +496,7 @@
 </details>
 
 
-## 📕 스터디 서비스
+### 📕 스터디 서비스
 <details>
     <summary>📌 스터디 참가 신청 API</summary>
     
@@ -729,3 +729,169 @@
 - 반환되는 스터디 신청 상태는 예: `PENDING`, `APPROVED`, `REJECTED` 등이 될 수 있습니다.
 - 이 API는 사용자 개인의 스터디 활동을 효과적으로 관리하기 위해 유용합니다.
 </details>
+
+<details>
+    <summary>📌 스터디 마감 API</summary>
+</details>
+
+
+<details>
+    <summary>📌 스터디장 스터디 OPEN 상태 조회 API</summary>
+</details>
+
+
+<details>
+    <summary>📌 스터디장 스터디 CLOSED 상태 조회 API</summary>
+</details>
+
+<details>
+    <summary>📌 스터디장 스터디 전체 조회 API</summary>
+</details>
+
+<details>
+    <summary>📌 스터디룸 삭제 API</summary>
+
+### 📤 요청 정보
+
+- **HTTP 메서드**: `DELETE`
+- **URL**: `http://localhost:8080/study/delete/{studyRoomId}`
+- **Content-Type**: 없음
+- **인증 필요**: ✅ 로그인 필요 (스터디 개설자 또는 관리자 권한 필요)
+
+---
+
+### 🔧 경로 변수 (Path Parameter)
+
+| 이름 | 타입 | 필수 | 설명 |
+| --- | --- | --- | --- |
+| studyRoomId | integer | ✅ | 삭제할 스터디룸의 고유 ID 값 |
+
+예시:
+
+`DELETE http://localhost:8080/study/delete/3`
+
+
+### 📥 응답 정보
+
+| HTTP 상태 코드 | 설명 |
+| --- | --- |
+| `204 No Content` | 스터디 삭제 성공. 본문 없이 상태 코드만 반환됨 |
+| `404 Not Found` | 해당 ID의 스터디룸이 존재하지 않음. 오류 메시지를 포함한 JSON 반환 |
+
+### ✅ 삭제 성공 응답 예시
+
+- **Status Code**: `204 No Content`
+- **Body**: 없음
+
+### ❌ 삭제 실패 응답 예시 (존재하지 않는 studyRoomId)
+
+- **Status Code**: `404 Not Found`
+- **Content-Type**: `application/json`
+
+```json
+{
+    "error": "스터디 상태 레코드를 찾을 수 없습니다. id=
+}
+```
+
+### 📝 참고 사항
+
+- 이 요청은 스터디룸이 실제로 존재하고, 사용자가 해당 스터디의 **삭제 권한을 보유**해야만 성공합니다.
+- 삭제된 스터디룸은 복구되지 않으며, 관련 신청 내역이나 활동 기록도 함께 무효화될 수 있습니다.
+- 프론트엔드에서는 `204` 응답을 받으면 목록에서 해당 스터디를 제거하고, `404` 응답 시 사용자에게 “존재하지 않는 스터디입니다.” 등의 알림을 제공해야 합니다.
+
+</details>
+
+<details>
+    <summary>📌 스터디룸 수정 API</summary>
+
+### 📤 요청 정보
+
+- **HTTP 메서드**: `PUT`
+- **URL**: `http://localhost:8080/study/update/{studyRoomId}`
+- **Content-Type**: `application/json`
+- **인증 필요**: ✅ 로그인 필요 (스터디 개설자 또는 관리자 권한)
+
+### 📦 요청 바디 예시
+
+```json
+{
+  "title": "기본부터 시작하는 JPA!!",
+  "description": "초보자 대상으로 하는 JPA 학습입니다.",
+  "category": "#백엔드#BackEnd#풀스택",
+  "maxMembers": 10
+}
+```
+
+| 파라미터 | 타입 | 필수 | 설명 |
+| --- | --- | --- | --- |
+| title | string | ✅ | 수정할 스터디 제목 |
+| description | string | ✅ | 수정할 스터디 설명 |
+| category | string | ✅ | 해시태그 또는 분류 문자열 |
+| maxMembers | integer | ✅ | 최대 모집 인원 |
+
+### 📥 응답 정보
+
+- **HTTP 상태 코드**: `200 OK` (성공 시) / `400 Bad Request` (에러 시)
+- **Content-Type**: `application/json`
+
+### ✅ 성공 응답 예시
+
+```json
+{
+  "studyRoomId": 2,
+  "title": "기본부터 시작하는 JPA!!",
+  "description": "초보자 대상으로 하는 JPA 학습입니다.",
+  "organizer": "홍길동",
+  "status": "OPEN",
+  "category": "#백엔드#BackEnd#풀스택",
+  "maxMembers": 10,
+  "createdAtFormatted": "2025-06-01 10:00",
+  "closedAtFormatted": null
+  }
+```
+
+### ❌ 실패 응답 예시 - 1 (존재하지 않는 스터디룸 수정 요청 시)
+
+- **상태 코드**: `400 Bad Request`
+
+```json
+{
+    "error": "스터디 상태 레코드를 찾을 수 없습니다. id=133"
+}
+```
+
+### ❌ 실패 응답 예시 - 2 (Title 공백 수정 시)
+
+```json
+{
+    "error": "Invalid Study Request",
+    "message": "수정할 제목은 비어 있을 수 없습니다.",
+    "timestamp": "2025-06-16T12:15:00.2349671",
+    "status": 400
+}
+```
+
+### ❌ 실패 응답 예시 - 3 (maxMembers 값이 0 일때)
+
+```json
+{
+    "error": "Invalid Study Request",
+    "message": "최대 인원은 1명 이상이어야 합니다.",
+    "timestamp": "2025-06-16T12:17:50.6740241",
+    "status": 400
+}
+```
+
+### 📝 참고 사항
+
+- `maxMembers`는 1 이상이어야 하며, 서버 측에서 유효성 검사 필요
+- `category`는 클라이언트에서 `#태그1#태그2` 형식으로 전송, 백엔드에서는 분리 가능
+- 수정 후 응답 객체는 생성 시와 동일한 구조를 유지하며, `studyRoomId`를 기준으로 변경된 정보를 확인 가능
+  
+</details>
+
+
+
+
+###
