@@ -421,9 +421,78 @@
 </details>
 
 
-
-
 <details>
+    <summary>📌 사용자 삭제 API</summary>
+
+### 📤 요청 정보
+
+- **HTTP 메서드**: `DELETE`
+- **URL**: `http://localhost:8080/user/{username}/delete`
+- **인증 필요**: ✅ 로그인된 사용자
+- **Content-Type**: 없음 (Body 필요 없음)
+
+### 🔧 경로 변수 (Path Variable)
+
+| 변수명 | 타입 | 필수 | 설명 |
+| --- | --- | --- | --- |
+| username | string | ✅ | 삭제 대상 사용자의 고유 ID |
+
+> 예:
+> 
+> 
+> `DELETE http://localhost:8080/user/user12/delete`
+> 
+
+### 📥 응답 정보
+
+응답은 JSON 형식이며 다음과 같은 구조를 가집니다:
+
+| 필드명 | 타입 | 설명 |
+| --- | --- | --- |
+| success | boolean | 요청 성공 여부 (`true` or `false`) |
+| data | null | 삭제 작업이므로 일반적으로 `null` 반환 |
+| errorCode | string | 실패 시 반환되는 에러 코드 (성공 시 `null`) |
+| message | string | 처리 결과에 대한 설명 메시지 |
+| timestamp | string | 응답 생성 시각 (ISO 8601 형식) |
+
+### ✅ 사용자 삭제 성공 응답 예시
+
+```json
+{
+  "success": true,
+  "data": null,
+  "errorCode": null,
+  "message": "회원 탈퇴가 완료되었습니다.",
+  "timestamp": "2025-06-15T20:10:00.000"
+}
+```
+
+### ❌ 실패 응답 예시 1 — 사용자가 존재하지 않음
+
+- **HTTP 상태 코드**: `400 Bad Request`
+- **Content-Type**: `application/json`
+
+```json
+  "해당 사용자를 찾을 수 없습니다."
+```
+
+### ❌ 실패 응답 예시 2 — 본인이 아닌 사용자 요청
+
+```json
+{
+  "success": false,
+  "data": null,
+  "errorCode": "UNAUTHORIZED",
+  "message": "본인만 탈퇴할 수 있습니다.",
+  "timestamp": "2025-06-15T20:12:00.000"
+}
+```
+
+### 📝 참고 사항
+
+- `username`은 시스템 내에서 실제로 존재하는 사용자여야 합니다.
+- 본인이 아닌 계정을 삭제하려는 경우 `403 Forbidden` 또는 `400 Bad Request`가 반환될 수 있습니다.
+- 삭제 처리는 보통 논리 삭제(soft delete) 또는 물리 삭제 중 정책에 따라 다를 수 있습니다.
 </details>
 
 
