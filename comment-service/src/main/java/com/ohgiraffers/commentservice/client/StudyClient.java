@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface StudyClient {
 
     @GetMapping("/{roomId}")
-    StudyStatusResponse getStudyStatus(@PathVariable("roomId") String roomId);
+    StudyStatusResponse getStudyInfo(@PathVariable("roomId") Long roomId);
 }
 
 
