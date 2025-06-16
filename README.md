@@ -53,9 +53,8 @@
 
 ---
 ## 2. 요구사항 정의서
-### ➡️ [요구사항 정의서](https://docs.google.com/spreadsheets/d/1HtXuEdEVc-X33P9dlSijZ4n9vdVsh1qGxlXfCI01yM8/edit?usp=sharing)
+### ➡️ [요구사항 정의서 & 테스트 케이스 결과서](https://docs.google.com/spreadsheets/d/1HtXuEdEVc-X33P9dlSijZ4n9vdVsh1qGxlXfCI01yM8/edit?usp=sharing)
 
-)
 
 ---
 
@@ -1421,5 +1420,382 @@
     
 </details>
 
+<details>
+    <summary>📌 댓글 등록 API</summary>
 
-###
+### 📤 요청 본문
+
+- 메서드(Method): `POST`
+- URL: [`http://localhost:8080/comment`](http://localhost:8080/comment)
+- **헤더(Headers)**:
+    - `Content-Type: application/json`
+    - `Authorization: Bearer {토큰}`
+
+### 📦 요청 바디 (Request Body)
+
+```json
+{
+  "postId": 1,
+  "content": "이건 test 댓글입니다."
+}
+```
+
+### 📥 응답 정보
+
+댓글이 성공적으로 등록되면, 서버는 **HTTP 200 OK** 상태와 함께 다음과 같은 정보를 담은 JSON을 반환합니다:
+
+| 필드명 | 타입 | 설명 |
+| --- | --- | --- |
+| postId | integer | 댓글이 달린 게시글 ID |
+| parentId | integer/null | 대댓글일 경우 부모 댓글 ID, 일반 댓글이면 `null` |
+| createdUserId | string | 댓글 작성자의 사용자 ID |
+| content | string | 등록한 댓글 내용 |
+| createdTime | string | 댓글이 생성된 시간 (ISO 8601 형식) |
+| modifiedTime | string | 댓글이 마지막으로 수정된 시간 |
+
+### ✅ 성공 응답 예시
+
+```json
+{
+  "postId": 1,
+  "parentId": null,
+  "createdUserId": "user07",
+  "content": "이건 test 댓글입니다.",
+  "createdTime": "2025-06-16T10:05:00",
+  "modifiedTime": "2025-06-16T10:05:00"
+}
+
+```
+
+### ❌ 실패 응답 예시 - 댓글 내용이 비어있을 때
+
+```json
+"댓글 내용이 비어있습니다. 댓글을 적어주세요!"
+
+```
+</details>
+
+<details>
+    <summary>📌 댓글 수정 API</summary>
+    
+### 📤 요청 정보
+
+- **요청 메서드**: `PUT`
+- **요청 URL**:
+    
+    `http://localhost:8080/comment/{commentId}`
+    
+    (여기서 `{commentId}`는 수정할 댓글의 고유 ID입니다)
+    
+- **요청 헤더**:
+    - `Content-Type: application/json`
+      
+### 📦 요청 바디 (Request Body)
+
+```json
+{
+  "postId": 1,
+  "content": "수정된 댓글 내용"
+}
+```
+
+| **필드명** | **타입** | **필수 여부** | **설명** |
+| --- | --- | --- | --- |
+| `postId` | integer | ✅ 필수 | 댓글이 달려 있는 게시글의 ID |
+| `content` | string | ✅ 필수 | 새롭게 수정할 댓글 내용 |
+
+### 📥 응답 정보
+
+| **항목** | **타입** | **설명** |
+| --- | --- | --- |
+| 본문 내용 | string | 수정 결과 메시지 (예: `"댓글 수정됨\n댓글 내용: ..."` ) |
+
+
+### ✅ 성공 응답 예시
+
+```json
+"댓글 수정됨"
+"댓글 내용: 테스트 댓글 수정 내용"
+```
+
+### ❌ 실패 응답 예시1 - 수정할 댓글 id가 존재하지 않을 때
+
+```json
+"댓글이 존재하지 않습니다: id = 7"
+```
+
+### ❌ 실패 응답 예시2 - 수정할 내용이 빈칸일 때
+
+```json
+"수정할 댓글 내용이 비어있습니다."
+```
+
+### ❌ 실패 응답 예시3 - 수정한 내용이 전과 같을 때
+
+```json
+"수정된 내용이 없습니다. 다시 수정할 내용을 입력해주세요"
+```
+
+### 📝 비고
+
+- `{commentId}`에 해당하는 댓글이 존재해야 합니다.
+- 존재하지 않는 ID로 요청할 경우, 에러 메시지가 반환됩니다.
+- 댓글 내용이 비어있거나 변경 사항이 없을 경우에도 오류 메시지를 받을 수 있습니다.
+</details>
+
+
+<details>
+    <summary>📌 댓글 삭제 API</summary>
+
+### 📤 요청 정보
+
+- **메서드(Method)**: `DELETE`
+- **URL**: `http://localhost:8080/comment/{id}`
+- **헤더(Headers)**:
+    - `Content-Type: application/json`
+    - `Authorization: Bearer {토큰}`
+
+### 📦 요청 바디 (Request Body)
+
+
+### 📥 응답 정보
+
+댓글 삭제 요청의 성공 또는 실패 여부를 나타냅니다.
+
+| 상태 코드 | 설명 |
+| --- | --- |
+| `200 OK` | 댓글이 정상적으로 삭제됨 |
+| `400 Bad Request` | 해당 ID의 댓글이 존재하지 않아 삭제할 수 없음 |
+
+### ✅ 성공 응답 예시
+
+```json
+"댓글 삭제됨"
+```
+
+### ❌ 실패 응답 예시
+
+```json
+"댓글이 존재하지 않습니다: id = 5"
+```
+
+### 📝 비고
+
+- 요청 시 `id` 경로 변수는 반드시 실제 존재하는 댓글 ID여야 합니다.
+- 존재하지 않는 ID를 전달하면 400 응답과 함께 오류 메시지가 반환됩니다.
+</details>
+
+
+<details>
+    <summary>📌 대댓글 등록 API</summary>
+
+### 📤 요청 정보
+
+- **요청 방식(Method)**: `POST`
+- **요청 URL**: `http://localhost:8080/comment/{commentId}/reply`
+    
+    예시: `http://localhost:8080/comment/5/reply`
+    
+### 📦 요청 바디 (Request Body)
+
+```json
+{
+  "postId": 1,
+  "content": "테스트 대댓글입니다."
+}
+```
+
+| 필드명 | 타입 | 필수 여부 | 설명 |
+| --- | --- | --- | --- |
+| postId | integer | ✅ 필수 | 대댓글이 달릴 게시글의 ID |
+| content | string | ✅ 필수 | 대댓글의 본문 내용 |
+
+### 📥 응답 정보 (성공 시)
+
+| 필드명 | 타입 | 설명 |
+| --- | --- | --- |
+| postId | integer | 대댓글이 연결된 게시글 ID |
+| parentId | integer | 부모 댓글 ID |
+| createdUserId | string | 대댓글 작성자의 ID |
+| content | string | 작성된 대댓글 내용 |
+| createdTime | string | 생성 시각 (ISO-8601 형식) |
+| modifiedTime | string | 마지막 수정 시각 (ISO-8601 형식) |
+
+### ✅ 성공 응답 예시
+
+```json
+json
+복사편집
+{
+  "postId": 1,
+  "parentId": 5,
+  "createdUserId": "user01",
+  "content": "테스트 대댓글입니다.",
+  "createdTime": "2025-06-16T15:21:00",
+  "modifiedTime": "2025-06-16T15:21:00"
+}
+
+```
+이 API는 **댓글 쓰레드 구조**를 지원하여 사용자 간의 원활한 소통을 가능하게 해줍니다.
+
+</details>
+
+
+<details>
+    <summary>📌 공지사항 등록 API</summary>
+    
+### 📤 요청 정보
+
+- **메서드**: `POST`
+- URL : [`http://localhost:8080/notice/](http://localhost:8080/notice/1){studyRoomId}`
+- **요청 형식**: JSON
+
+### ✅ 요청 본문 필드
+
+| 필드명 | 타입 | 설명 |
+| --- | --- | --- |
+| `title` | string | 공지사항 제목입니다. |
+| `content` | string | 공지사항 본문(내용)입니다. |
+
+### 📌 예시 요청
+
+```json
+json
+복사편집
+{
+  "title": "Sample Notice Title",
+  "content": "This is the content of the notice."
+}
+
+```
+
+### 📥 응답 정보
+
+요청이 성공하면 서버는 JSON 형식의 응답을 반환합니다.
+
+하지만 최근 실행에서는 **서버 오류 (500)** 가 발생하였으며, 오류 응답은 다음과 같은 구조를 가집니다:
+
+| 필드명 | 타입 | 설명 |
+| --- | --- | --- |
+| timestamp | string | 오류가 발생한 시간 |
+| path | string | 요청이 도달한 URL 경로 |
+| status | integer | HTTP 상태 코드 (`500` 등) |
+| error | string | 오류 설명 |
+| requestId | string | 요청을 식별하기 위한 고유 ID |
+
+### ✅ 성공 응답 예시
+
+```json
+"공지사항 등록 완료"
+"작성자: user07"
+"제목: 테스트 공지사항"
+"내용: 공지 내용입니다."
+
+```
+### ❌ 실패 응답 예시 1 - 공지사항 내용이 비어있을 시
+
+```json
+"비어있는 내용이 있습니다. 내용을 채워주세요."
+```
+
+### ❌ 실패 응답 예시 2 - 공지사항 권한이 없을 시
+
+```json
+"공지사항 작성 권한이 없습니다. organizerId가 3인 사용자만 작성할 수 있습니다."
+```
+</details>
+
+
+<details>
+    <summary>📌 공지사항 수정 API</summary>
+
+### 📤 요청 정보
+
+- **URL**: `http://localhost:8080/notice/{id}`
+- **메서드**: `PUT`
+- **헤더(Headers)**:
+    - `Content-Type: application/json`
+    - `Authorization: Bearer {토큰}`
+
+### 📦 요청 바디 (Request Body)
+
+```json
+{
+  "title": "Your Notice Title",
+  "content": "The content of your notice.",
+  "writerId": 1
+}
+```
+
+| 필드명 | 타입 | 설명 |
+| --- | --- | --- |
+| `title` | string | 변경할 공지사항 제목 |
+| `content` | string | 변경할 공지사항 본문 내용 |
+| `writerId` | integer | 공지사항을 수정하는 작성자의 ID |
+
+### 📥 응답 정보
+
+- **HTTP 상태 코드**: `200 OK`
+- **Content-Type**: `text/plain`
+- **본문 내용**: 공지사항이 성공적으로 수정되었음을 알려주는 메시지 + 수정된 정보
+
+### ✅ 성공 응답 예시
+
+```json
+"공지사항 수정 완료"
+"작성자: user07"
+"제목: 테스트 FIFA 게임"
+"내용: 닉네임에 호,날,두 들어가면 다 강퇴"
+```
+
+### ❌ 실패 응답 예시 1 - 수정할 내용이 없을 시
+
+```json
+"수정된 내용이 없습니다. 다시 수정할 내용을 입력해주세요."
+```
+
+### ❌ 실패 응답 예시 2 - 수정할 공지사항이 존재하지 않을 시
+
+```json
+"공지사항이 존재하지 않습니다: id = 3"
+```
+</details>
+
+<details>
+    <summary>📌 공지사항 삭제 API</summary>
+    
+### 📤 요청 정보
+
+- **메서드**: `DELETE`
+- **URL**: `http://localhost:8080/notice/{id}`
+    
+    (여기서 `{id}`는 삭제하려는 공지사항의 고유 ID)
+    
+- **헤더(Headers)**:
+    - `Content-Type: application/json`
+    - `Authorization: Bearer {토큰}`
+
+### 📦 요청 바디 (Request Body)
+
+| 필드명 | 타입 | 필수 여부 | 설명 |
+| --- | --- | --- | --- |
+| `id` | integer | ✅ 필수 | 삭제할 공지사항의 고유 ID 값입니다 |
+
+### 📥 응답 정보
+
+- **HTTP 상태 코드**: `200 OK`
+- **Content-Type**: `text/plain`
+
+### ✅ 성공 응답 예시
+
+```json
+"공지사항 삭제 완료"
+```
+
+### ❌ 실패 응답 예시 - 공지사항이 존재하지 않을 시
+
+```json
+"공지사항이 존재하지 않습니다: id = 3"
+```
+
+</details>
