@@ -15,6 +15,7 @@ public class NoticeController {
     private final NoticeService noticeService;
 
     // ✅ 공지사항 작성
+    // ✅ 공지사항 작성
     @PostMapping("/{studyRoomId}")
     public ResponseEntity<String> create(@PathVariable Long studyRoomId, @RequestBody NoticeRequestDto dto) {
         try {
@@ -23,6 +24,7 @@ public class NoticeController {
                 throw new IllegalArgumentException("비어있는 내용이 있습니다. 내용을 채워주세요.");
             }
 
+            // 인증 없이 작성자 ID를 서비스 내부 로직에서 처리
             String writerId = noticeService.create(studyRoomId, dto);
 
             String responseMessage = String.format(
@@ -36,6 +38,7 @@ public class NoticeController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 
     // ✅ 공지사항 수정
     @PutMapping("/{noticeId}")
