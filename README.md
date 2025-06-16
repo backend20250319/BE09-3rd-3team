@@ -59,7 +59,7 @@
 ### 3-1. API 설계
 ## 📕 스터디 서비스
 <details>
-    <summary>📕 스터디 참가 신청 API</summary>
+    <summary>스터디 참가 신청 API</summary>
     
 ### 📤 요청 정보
 
@@ -142,7 +142,7 @@
 </details>
 
 <details>
-    <summary>📕 스터디 참가 신청 취소 API</summary>
+    <summary>스터디 참가 신청 취소 API</summary>
 
 ### 📤 요청 정보
 
@@ -220,4 +220,78 @@
 - 승인된 신청(예: `APPROVED`, `REJECTED`)은 취소할 수 없습니다.
 - 스터디 ID는 존재해야 하며, 유효하지 않으면 `STUDY_NOT_FOUND` 오류가 발생합니다.
 
+</details>
+
+
+<details>
+    <summary>📌 내 스터디 신청 내역 조회 API</summary>
+    
+## 📤 요청 정보
+
+- **메서드(Method)**: `GET`
+- **URL**: `http://localhost:8080/study/me`
+- **인증 필요**: ✅ `Bearer 토큰` 필요 (로그인된 사용자 기준)
+
+### 📥 응답 정보
+
+| 필드명 | 타입 | 설명 |
+| --- | --- | --- |
+| success | boolean | 요청 성공 여부 (`true` 또는 `false`) |
+| data | array 또는 string | 사용자의 스터디 신청 내역 리스트 (`없으면 빈 문자열 ""`) |
+| errorCode | string 또는 null | 실패 시 에러 코드 (성공 시 `null`) |
+| message | string 또는 null | 실패 또는 안내 메시지 (성공 시 `null`) |
+| timestamp | string | 응답 시간 (ISO-8601 형식) |
+
+### 🔍 data 내부 구조 (성공 시 array)
+
+| 필드명 | 타입 | 설명 |
+| --- | --- | --- |
+| id | integer | 신청 내역 고유 ID |
+| studyRoomId | integer | 신청한 스터디룸의 ID |
+| title | string | 스터디 제목 |
+| description | string | 스터디 설명 |
+| category | string | 카테고리 |
+| status | string | 신청 상태 (`PENDING`, `APPROVED` 등) |
+| createdAt | string | 신청 일시 |
+
+### ✅ 예시 응답 (내역 존재 시)
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": 12,
+      "studyRoomId": 101,
+      "title": "자바 스터디",
+      "description": "초급 자바 프로그래밍 공부",
+      "category": "프로그래밍",
+      "status": "PENDING",
+      "createdAt": "2025-06-10T14:32:45.000"
+    }
+  ],
+  "errorCode": null,
+  "message": null,
+  "timestamp": "2025-06-15T18:10:22.123"
+}
+
+```
+
+### ✅ 예시 응답 (내역 없음)
+
+```json
+{
+  "success": true,
+  "data": "신청한 스터디가 없습니다.",
+  "errorCode": null,
+  "message": null,
+  "timestamp": "2025-06-15T18:12:00.789"
+}
+
+```
+
+### 📝 비고
+
+- 반환되는 스터디 신청 상태는 예: `PENDING`, `APPROVED`, `REJECTED` 등이 될 수 있습니다.
+- 이 API는 사용자 개인의 스터디 활동을 효과적으로 관리하기 위해 유용합니다.
 </details>
