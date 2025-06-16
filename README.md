@@ -1045,7 +1045,7 @@
 - **URL**: `http://localhost:8080/study/create`
 - **Content-Type**: `application/json`
 - **인증 필요**: ✅ 로그인된 사용자 (예: JWT 토큰)
-- 
+  
 ### 📦 요청 바디 (Request Body)
 
 ```json
