@@ -300,10 +300,74 @@
 </details>
 
 <details>
+    <summary>📌 사용자 이름 변경 API</summary>
+
+### 📤 요청 정보
+
+- **HTTP 메서드**: `PATCH`
+- **URL**: `http://localhost:8080/user/{userId}/name`
+- **Content-Type**: `application/json`
+- **인증 필요**: ✅ 로그인된 사용자만 가능 (보통 본인만 가능)
+
+### 🔧 경로 변수 (Path Variable)
+
+| 이름 | 타입 | 필수 | 설명 |
+| --- | --- | --- | --- |
+| userId | string | ✅ | 이름을 변경할 대상 사용자 ID |
+
+
+### 📦 요청 바디 (Request Body)
+
+| 필드명 | 타입 | 필수 | 설명 |
+| --- | --- | --- | --- |
+| name | string | ✅ | 새로 설정할 사용자 이름 |
+
+### 📥 응답 정보
+
+| 필드명 | 타입 | 설명 |
+| --- | --- | --- |
+| success | boolean | 요청 성공 여부 |
+| data | null | 현재는 사용되지 않음 |
+| errorCode | string | 오류 발생 시 반환되는 에러 코드 (성공 시 `null`) |
+| message | string | 결과에 대한 메시지 |
+| timestamp | string | 응답 생성 시간 (ISO 8601 형식) |
+
+### ✅ 성공 응답 예시
+
+```json
+{
+  "success": true,
+  "data": null,
+  "errorCode": null,
+  "message": "이름이 성공적으로 변경되었습니다.",
+  "timestamp": "2025-06-15T19:45:00.000"
+}
+```
+
+### ❌ 실패 응답 예시 — 사용자 없음
+
+- **HTTP 상태 코드**: `400 Bad Request`
+- **Content-Type**: `application/json`
+
+```json
+
+  "해당 사용자를 찾을 수 없습니다."
+```
+
+### 📝 참고 사항
+
+- 요청자는 보통 본인이어야 하며, 다른 사용자의 이름은 변경할 수 없습니다.
+- 존재하지 않는 `userId`로 요청 시 400 상태 코드와 함께 `"해당 사용자를 찾을 수 없습니다."`라는 메시지를 반환합니다.
+- 이름에 대해 공백 또는 최대 길이 제한 등의 유효성 검사가 포함될 수 있습니다.
 </details>
+
+
 
 <details>
 </details>
+
+
+
 
 <details>
 </details>
