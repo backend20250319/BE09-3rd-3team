@@ -97,4 +97,10 @@ public class StudyStatusController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(list);
     }
+
+    @GetMapping("/{studyRoomId}")
+    public ResponseEntity<StudyStatusResponse> getStudyInfo(@PathVariable Long studyRoomId) {
+        StudyStatusResponse response = studyStatusService.getStudyInfo(studyRoomId);
+        return ResponseEntity.ok(response);
+    }
 }
