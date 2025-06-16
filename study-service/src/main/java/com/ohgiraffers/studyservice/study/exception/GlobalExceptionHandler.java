@@ -34,15 +34,15 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(response);
     }
 
-    // 2. 존재하지 않는 스터디 ID 요청 처리
+    // 2. 스터디 상태 레코드를 찾을 수 없음
     @ExceptionHandler(StudyStatusNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handleStudyNotFoundException(StudyStatusNotFoundException ex) {
-        log.warn("스터디를 찾을 수 없습니다: {}", ex.getMessage());
+    public ResponseEntity<Map<String, Object>> handleStudyStatusNotFoundException(StudyStatusNotFoundException ex) {
+        log.warn("스터디 상태 레코드 조회 실패: {}", ex.getMessage());
 
         Map<String, Object> response = new HashMap<>();
         response.put("timestamp", LocalDateTime.now());
         response.put("status", 404);
-        response.put("error", "Study Not Found");
+        response.put("error", "Study Status Not Found");
         response.put("message", ex.getMessage());
 
         return ResponseEntity.status(404).body(response);
@@ -76,7 +76,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(response);
     }
 
-    // (선택) 예기치 않은 예외 처리
+    // 5. 예기치 않은 모든 오류 처리
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleOtherExceptions(Exception ex) {
         log.error("알 수 없는 서버 오류 발생", ex);

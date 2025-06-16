@@ -6,11 +6,13 @@ import com.ohgiraffers.studyservice.study.entity.StudyStatusRecord;
 import com.ohgiraffers.studyservice.study.exception.StudyStatusNotFoundException;
 import com.ohgiraffers.studyservice.study.repository.StudyStatusRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -18,73 +20,77 @@ public class StudyStatusService {
 
     private final StudyStatusRepository studyStatusRepository;
 
-    /**
-     * [현재 미사용] userId 없이 스터디 상태 생성 (테스트 용도 등)
-     */
     public StudyStatusRecord createStudyStatus() {
         StudyStatusRecord record = StudyStatusRecord.builder()
                 .status(StudyStatus.OPEN)
                 .build();
-        return studyStatusRepository.save(record);
+        StudyStatusRecord saved = studyStatusRepository.save(record);
+        log.info("스터디 상태 레코드 생성됨: {}", saved);
+        return saved;
     }
 
-    /**
-     * 주어진 userId로 StudyStatusRecord 저장
-     */
     public StudyStatusRecord createStudyStatusWithUserId(String userId) {
         StudyStatusRecord record = StudyStatusRecord.builder()
                 .userId(userId)
                 .status(StudyStatus.OPEN)
                 .build();
-        return studyStatusRepository.save(record);
+        StudyStatusRecord saved = studyStatusRepository.save(record);
+        log.info("userId='{}'로 스터디 상태 생성됨", userId);
+        return saved;
     }
 
-    /**
-     * studyRoomId로 스터디 상태 조회
-     */
     @Transactional(readOnly = true)
     public StudyStatusRecord getStudyStatusById(Long id) {
         return studyStatusRepository.findById(id)
-                .orElseThrow(() -> new StudyStatusNotFoundException("스터디 상태 레코드를 찾을 수 없습니다. id=" + id));
+                .orElseThrow(() -> {
+                    log.warn("스터디 상태 조회 실패: id={} 존재하지 않음", id);
+                    return new StudyStatusNotFoundException("스터디 상태 레코드를 찾을 수 없습니다. id=" + id);
+                });
     }
 
-    /**
-     * organizerId로 스터디 상태 조회
-     */
     @Transactional(readOnly = true)
     public StudyStatusRecord getByUserId(String organizerId) {
+        if (!organizerId.startsWith("user")) {
+            log.warn("유효하지 않은 userId 형식: {}", organizerId);
+            throw StudyStatusNotFoundException.invalidFormat(organizerId);
+        }
+
         return studyStatusRepository.findByOrganizerId(organizerId)
-                .orElseThrow(() -> new StudyStatusNotFoundException("userId='" + organizerId + "'인 레코드를 찾을 수 없습니다."));
+                .orElseThrow(() -> {
+                    log.warn("스터디 상태 조회 실패: userId='{}' 존재하지 않음", organizerId);
+                    return new StudyStatusNotFoundException(organizerId);
+                });
     }
 
-    /**
-     * 스터디 상태를 CLOSED로 변경
-     */
     public StudyStatusRecord closeStudyStatus(Long id) {
         StudyStatusRecord record = getStudyStatusById(id);
         record.setStatus(StudyStatus.CLOSED);
-        return studyStatusRepository.save(record);
+        StudyStatusRecord saved = studyStatusRepository.save(record);
+        log.info("스터디 상태 마감 처리 완료 [id={}, userId={}, status=CLOSED]", id, record.getUserId());
+        return saved;
     }
 
-    // ✅ 추가: 특정 userId가 가진 모든 스터디 상태 레코드 조회
     @Transactional(readOnly = true)
     public List<StudyStatusRecord> getAllByUserId(String userId) {
-        return studyStatusRepository.findAllByUserId(userId);
+        List<StudyStatusRecord> list = studyStatusRepository.findAllByUserId(userId);
+        log.info("userId='{}'의 전체 스터디 상태 {}건 조회됨", userId, list.size());
+        return list;
     }
 
-    // ✅ 추가: 특정 userId가 가진 OPEN 상태만 조회
     @Transactional(readOnly = true)
     public List<StudyStatusRecord> getAllOpenByUserId(String userId) {
-        return studyStatusRepository.findAllByUserIdAndStatus(userId, StudyStatus.OPEN);
+        List<StudyStatusRecord> list = studyStatusRepository.findAllByUserIdAndStatus(userId, StudyStatus.OPEN);
+        log.info("userId='{}'의 OPEN 상태 스터디 {}건 조회됨", userId, list.size());
+        return list;
     }
 
-    // ✅ 추가: 특정 userId가 가진 CLOSED 상태만 조회
     @Transactional(readOnly = true)
     public List<StudyStatusRecord> getAllClosedByUserId(String userId) {
-        return studyStatusRepository.findAllByUserIdAndStatus(userId, StudyStatus.CLOSED);
+        List<StudyStatusRecord> list = studyStatusRepository.findAllByUserIdAndStatus(userId, StudyStatus.CLOSED);
+        log.info("userId='{}'의 CLOSED 상태 스터디 {}건 조회됨", userId, list.size());
+        return list;
     }
 
-    // ✅ 추가: studyRoomId로 organizerId + userId 반환용 응답 DTO 제공
     @Transactional(readOnly = true)
     public StudyStatusResponse getStudyInfo(Long studyRoomId) {
         StudyStatusRecord record = getStudyStatusById(studyRoomId);
@@ -93,7 +99,7 @@ public class StudyStatusService {
         response.setOrganizerId(String.valueOf(record.getOrganizerId()));
         response.setUserId(record.getUserId());
         response.setStatus(record.getStatus());
-
+        log.info("스터디 정보 반환됨: studyRoomId={}, userId={}, status={}", record.getStudyRoomId(), record.getUserId(), record.getStatus());
         return response;
     }
 }
