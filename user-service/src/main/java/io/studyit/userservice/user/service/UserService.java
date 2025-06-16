@@ -3,12 +3,12 @@ package io.studyit.userservice.user.service;
 import io.studyit.jwt.JwtPayload;
 import io.studyit.jwt.JwtTokenProvider;
 import io.studyit.userservice.user.dto.LoginRequest;
-import io.studyit.userservice.user.dto.SignupRequest;
 import io.studyit.userservice.user.dto.TokenResponse;
 import io.studyit.userservice.user.entity.RefreshToken;
 import io.studyit.userservice.user.entity.User;
 import io.studyit.userservice.user.repository.RefreshTokenRepository;
 import io.studyit.userservice.user.repository.UserRepository;
+import io.studyit.userservice.validation.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -30,6 +30,8 @@ public class UserService {
 
 
     public TokenResponse login(LoginRequest request) {
+
+        UserValidator.validateLoginInput(request);
 
         Optional<User> userOptional = userRepository.findByUserId(request.getUserId());
 
@@ -99,7 +101,29 @@ public class UserService {
     }
 
     public void logout(String refreshToken) {
-        JwtPayload payload = jwtTokenProvider.getPayloadFromToken(refreshToken);
+
+        if (refreshToken == null || refreshToken.trim().isEmpty()) {
+            throw new IllegalArgumentException("리프레시 토큰은 필수 입력값입니다.");
+        }
+
+        JwtPayload payload;
+        try {
+            payload = jwtTokenProvider.getPayloadFromToken(refreshToken);
+        } catch (Exception e) {
+            throw new BadCredentialsException("유효하지 않은 리프레시 토큰입니다.");
+        }
+
+        RefreshToken storedToken = refreshTokenRepository.findById(payload.userId())
+                .orElseThrow(() -> new BadCredentialsException("해당 유저로 저장된 리프레시 토큰이 없습니다."));
+
+        if (!storedToken.getToken().equals(refreshToken)) {
+            throw new BadCredentialsException("저장된 리프레시 토큰과 일치하지 않습니다.");
+        }
+
+        if (storedToken.getExpiryDate().before(new Date())) {
+            throw new BadCredentialsException("리프레시 토큰이 만료되었습니다.");
+        }
+
         refreshTokenRepository.deleteById(payload.userId());
     }
 }

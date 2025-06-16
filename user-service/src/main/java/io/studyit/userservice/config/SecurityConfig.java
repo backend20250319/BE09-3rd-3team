@@ -46,7 +46,6 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, "/user/signup", "/user/login", "/user/refresh").permitAll()
                                 .anyRequest().authenticated()
                 )
-                // Gateway에서 전달한 헤더를 이용하는 필터 추가
                 .addFilterBefore(headerAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
