@@ -149,8 +149,165 @@
 - `userId`는 반드시 고유해야 하며, 중복된 경우 400 오류 또는 사용자 정의 오류 코드가 반환됩니다.
 - 비밀번호는 절대 평문으로 저장되어서는 안 되며, 반드시 해시 암호화 처리가 필요합니다.
 - 보안을 위해 최소 비밀번호 정책 및 유효성 검사를 서버 또는 클라이언트 단에서 추가하는 것이 좋습니다.
-
 </details>
+
+<details>
+    <summary>📌 사용자 로그인 API</summary>
+## 📤 요청 정보
+
+- **HTTP 메서드**: `POST`
+- **URL**: `http://localhost:8080/user/login`
+- **Content-Type**: `application/json`
+
+### 📦 요청 바디 (Request Body)
+
+```json
+{
+  "userId": "user08",
+  "password": "user08"
+}
+```
+
+| 필드명 | 타입 | 필수 | 설명 |
+| --- | --- | --- | --- |
+| userId | string | ✅ | 로그인 대상 사용자 ID |
+| password | string | ✅ | 해당 사용자 ID에 대한 비밀번호 |
+
+
+## 📥 응답 정보
+
+- **Content-Type**: `application/json`
+
+### 응답 구조
+
+| 필드명 | 타입 | 설명 |
+| --- | --- | --- |
+| success | boolean | 로그인 성공 여부 |
+| data | object | 로그인 성공 시 토큰 정보를 포함하는 객체 |
+| ┗ accessToken | string | API 인증을 위한 액세스 토큰 (Bearer Token 등) |
+| ┗ refreshToken | string | 액세스 토큰 만료 시 재발급 요청에 사용되는 토큰 |
+| errorCode | string or null | 실패 시 에러 코드, 성공 시에는 null |
+| message | string | 로그인 처리 결과에 대한 메시지 |
+| timestamp | string | 응답이 생성된 시간 (ISO-8601 형식) |
+
+### ✅ 로그인 성공 응답 예시
+
+```json
+{
+  "success": true,
+  "data": {
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "refreshToken": "d4b9ef3a-d2e4-4c77-bcc1-3f8c304b3d10"
+  },
+  "errorCode": null,
+  "message": "",
+  "timestamp": "2025-06-15T19:20:00.000"
+}
+```
+
+### ❌ 로그인 실패 예시
+
+```json
+{
+  "success": false,
+  "data": null,
+  "errorCode": "INVALID_CREDENTIALS",
+  "message": "아이디 또는 비밀번호가 올바르지 않습니다.",
+  "timestamp": "2025-06-15T19:21:12.000"
+}
+```
+</details>
+
+
+<details>
+    <summary>📌 사용자 비밀번호 변경 API</summary>
+
+## 📤 요청 정보
+
+- **HTTP 메서드**: `PATCH`
+- **URL**: `http://localhost:8080/user/{username}/password`
+- **Content-Type**: `application/json`
+- **인증 필요**: ✅ 로그인 필요 (본인만 가능)
+
+### 🔧 경로 변수 (Path Variable)
+
+| 변수명 | 타입 | 필수 | 설명 |
+| --- | --- | --- | --- |
+| username | string | ✅ | 비밀번호를 변경할 사용자 ID |
+
+
+### 📦 요청 바디 (Request Body)
+
+```json
+{
+  "currentPassword": "user12",
+  "newPassword": "user13"
+}
+```
+
+| 필드명 | 타입 | 필수 | 설명 |
+| --- | --- | --- | --- |
+| currentPassword | string | ✅ | 현재 사용자의 비밀번호 (본인 인증용) |
+| newPassword | string | ✅ | 새로 설정할 비밀번호 (서버의 비밀번호 정책 적용) |
+
+
+## 📥 응답 정보
+
+### 📄 성공 응답 구조
+
+| 필드명 | 타입 | 설명 |
+| --- | --- | --- |
+| success | boolean | 비밀번호 변경 성공 여부 |
+| data | object | 변경 전후 비밀번호 요약 정보 (`before`, `after` 등) |
+| errorCode | string | 실패 시 오류 코드, 성공 시 `null` |
+| message | string | 안내 또는 실패 메시지 |
+| timestamp | string | 응답 시간 (ISO 8601 형식) |
+
+
+### ✅ 성공 응답 예시
+
+```json
+{
+  "success": true,
+  "data": {
+    "before": "******",
+    "after": "user13"
+  },
+  "errorCode": null,
+  "message": "비밀번호가 성공적으로 변경되었습니다.",
+  "timestamp": "2025-06-15T19:55:00.000"
+}
+```
+
+> ⚠ 실제 비밀번호를 그대로 노출하지 않고 "****" 또는 비밀번호 길이, 변경 여부 정도만 요약해서 반환하는 것이 보안상 안전합니다.
+
+### ❌ 실패 응답 예시
+
+### 1. 사용자를 찾을 수 없는 경우
+
+- **Status Code**: `400 Bad Request`
+- **Content-Type**: `application/json`
+
+```json
+"해당 사용자를 찾을 수 없습니다."
+```
+### 2. 현재 비밀번호가 일치하지 않는 경우
+
+```json
+"현재 비밀번호가 올바르지 않습니다."
+```
+    
+</details>
+
+<details>
+</details>
+
+<details>
+</details>
+
+<details>
+</details>
+
 
 ## 📕 스터디 서비스
 <details>
