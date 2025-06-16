@@ -364,6 +364,60 @@
 
 
 <details>
+    <summary>📌 사용자 로그아웃 API</summary>
+
+### 📤 요청 정보
+
+- **HTTP 메서드**: `POST`
+- **URL**: `http://localhost:8080/user/logout`
+- **Content-Type**: `application/json`
+- **인증 필요**: ✅ 로그인 상태에서 사용 (일반적으로 AccessToken 함께 전달됨)
+
+
+### 📦 요청 바디 (Request Body)
+
+```json
+{
+  "refreshToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ..."
+}
+```
+
+| 필드명 | 타입 | 필수 | 설명 |
+| --- | --- | --- | --- |
+| refreshToken | string | ✅ | 현재 사용자의 세션에 발급된 리프레시 토큰 |
+
+
+### 📥 응답 정보
+
+| 필드명 | 타입 | 설명 |
+| --- | --- | --- |
+| success | boolean | 요청 성공 여부 |
+| data | null | 로그아웃 처리이므로 데이터는 `null` |
+| errorCode | string | 실패 시 오류 코드 (`INVALID_TOKEN`, `UNAUTHORIZED`) 등 |
+| message | string | 결과 메시지 |
+| timestamp | string | 응답 생성 시각 (ISO 8601 형식) |
+
+### ✅ 성공 응답 예시 (`200 OK`)
+
+```json
+{
+  "success": true,
+  "data": null,
+  "errorCode": null,
+  "message": "로그아웃이 성공적으로 완료되었습니다.",
+  "timestamp": "2025-06-15T20:05:00.000"
+}
+
+```
+
+### ❌ 실패 응답 예시 — 잘못된 또는 만료된 토큰 (`401 Unauthorized`)
+
+```json
+{
+  "error": "Unauthorized",
+  "message": "Full authentication is required to access this resource"
+}
+```
 </details>
 
 
@@ -501,8 +555,6 @@
 
 ```
 
----
-
 ### ❌ 실패 응답 예시 1 — 신청 내역 없음
 
 ```json
@@ -515,9 +567,6 @@
 }
 
 ```
-
----
-
 ### ❌ 실패 응답 예시 2 — 상태가 대기(PENDING)가 아님
 
 ```json
