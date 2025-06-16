@@ -53,9 +53,9 @@
 
 ---
 ## 2. 요구사항 정의서
+### ➡️ [요구사항 정의서](https://docs.google.com/spreadsheets/d/1HtXuEdEVc-X33P9dlSijZ4n9vdVsh1qGxlXfCI01yM8/edit?usp=sharing)
 
-### ➡️ [요구사항 정의서]([https://github.com/backend20250319/BE09-3rd-3team](https://docs.google.com/spreadsheets/d/1HtXuEdEVc-X33P9dlSijZ4n9vdVsh1qGxlXfCI01yM8/edit?usp=sharing
-))
+)
 
 ---
 
