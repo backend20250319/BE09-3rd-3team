@@ -36,9 +36,6 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="17">
-      <module name="commentservice" target="17" />
-      <module name="commentservice.main" target="17" />
-      <module name="commentservice.test" target="17" />
       <module name="config-server" target="17" />
       <module name="config-server.main" target="17" />
       <module name="config-server.test" target="17" />

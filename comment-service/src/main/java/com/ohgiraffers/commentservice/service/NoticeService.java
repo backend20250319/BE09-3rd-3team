@@ -31,33 +31,31 @@ public class NoticeService {
     // ✅ 공지사항 생성
     @Transactional
     public String create(Long studyRoomId, NoticeRequestDto dto) {
-        String userId = getCurrentUserId();
+        String userId = getCurrentUserId();  // 현재 로그인된 사용자 ID
 
-        StudyStatusResponse studyStatus = studyClient.getStudyStatus(String.valueOf(studyRoomId));
-
-        System.out.println("[DEBUG] Feign 응답 확인 ===================");
-        System.out.println("organizerId (from studyStatus): " + studyStatus.getOrganizerId());
-        System.out.println("userId (from studyStatus): " + studyStatus.getUserId());
-        System.out.println("현재 로그인한 사용자 (from header): " + userId);
-        System.out.println("========================================");
+        // ✅ StudyService 에서 studyRoomId 로 스터디 정보 조회
+        StudyStatusResponse studyStatus = studyClient.getStudyInfo(studyRoomId);
 
         String organizerId = studyStatus.getOrganizerId();
         String registeredUserId = studyStatus.getUserId();
 
-        // ✅ 조건: organizerId가 3이고, 요청자가 실제 해당 userId여야 함
+        // ✅ 조건: organizerId가 "3"이고, 요청자(userId)가 registeredUserId와 같아야 함
         if (!"3".equals(organizerId) || !userId.equals(registeredUserId)) {
             throw new IllegalArgumentException("공지사항 작성 권한이 없습니다. organizerId가 3인 사용자만 작성할 수 있습니다.");
         }
 
+        // ✅ 공지사항 저장
         Notice notice = new Notice();
         notice.setStudyRoomId(studyRoomId);
-        notice.setWriterId(userId); // 실제 작성자 ID
+        notice.setWriterId(userId);
         notice.setTitle(dto.getTitle());
         notice.setContent(dto.getContent());
+
         noticeRepository.save(notice);
 
         return userId;
     }
+
 
     // ✅ 공지사항 수정
     @Transactional
