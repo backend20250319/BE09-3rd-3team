@@ -70,6 +70,8 @@
       <module name="StudyIt.user-service" options="-parameters" />
       <module name="StudyIt.user-service.main" options="-parameters" />
       <module name="StudyIt.user-service.test" options="-parameters" />
+      <module name="com.ohgiraffers.StudyIt.study-service.main" options="-parameters" />
+      <module name="io.studyit.StudyIt.user-service.main" options="-parameters" />
     </option>
   </component>
 </project>
