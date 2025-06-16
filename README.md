@@ -29,7 +29,7 @@
 - 실전 API 설계 및 Postman 테스트 경험 강화
 
 
-## 🚀 기술 스택
+### 🚀 기술 스택
 
 ![Java](https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=java&logoColor=white)
 ![Spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
