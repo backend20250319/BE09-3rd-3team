@@ -23,6 +23,7 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+
     private final RefreshTokenRepository refreshTokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;

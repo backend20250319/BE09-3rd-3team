@@ -24,6 +24,8 @@ public class UserCommandService {
 
     @Transactional
     public void registerUser(UserCreateRequest request) {
+        validateUserInput(request);
+
         if (userRepository.existsByUserId(request.getUserId())) {
             throw new IllegalArgumentException("이미 존재하는 사용자 ID 입니다.");
         }
@@ -31,6 +33,20 @@ public class UserCommandService {
         User user = modelMapper.map(request, User.class);
         user.setEncodedPassword(passwordEncoder.encode(request.getPassword()));
         userRepository.save(user);
+    }
+
+    private void validateUserInput(UserCreateRequest request) {
+        if (request.getUserId() == null || request.getUserId().trim().isEmpty()) {
+            throw new IllegalArgumentException("아이디는 필수 입력값입니다.");
+        }
+
+        if (request.getPassword() == null || request.getPassword().trim().isEmpty()) {
+            throw new IllegalArgumentException("비밀번호는 필수 입력값입니다.");
+        }
+
+        if (request.getName() == null || request.getName().trim().isEmpty()) {
+            throw new IllegalArgumentException("이름은 필수 입력값입니다.");
+        }
     }
 
     @Transactional
@@ -74,10 +90,8 @@ public class UserCommandService {
             throw new AccessDeniedException("본인만 회원 탈퇴할 수 있습니다.");
         }
 
-        // 토큰 삭제 (추가됨)
         RefreshTokenRepository.deleteByUserId(user.getUserId());
 
-        // 유저 삭제
         userRepository.delete(user);
     }
 }
