@@ -892,6 +892,246 @@
 </details>
 
 
+<details>
+    <summary>📌 스터디룸 상세 조회 API</summary>
+    
+### 📤 요청 정보
+
+- **HTTP 메서드**: `GET`
+- **URL**: `http://localhost:8080/study/search/{studyRoomid}`
+- **Content-Type**: 없음
+- **인증 필요**: ✅ 로그인된 사용자 (예: JWT 토큰)
+
+### 🔧 경로 변수 (Path Parameter)
+
+| 이름 | 타입 | 필수 | 설명 |
+| --- | --- | --- | --- |
+| id | integer | ✅ | 조회할 스터디룸의 고유 ID |
+
+예시:
+
+`GET http://localhost:8080/study/search/1`
+
+### 📥 응답 정보
+
+- **성공 시 상태 코드**: `200 OK`
+- **실패 시 상태 코드**: `404 Not Found`
+- **Content-Type**: `application/json`
+
+### 📄 성공 응답 구조
+
+| 필드명 | 타입 | 설명 |
+| --- | --- | --- |
+| studyRoomId | integer | 스터디룸의 고유 ID |
+| title | string | 스터디 제목 |
+| description | string | 스터디 설명 |
+| organizer | string | 주최자 이름 |
+| status | string | 현재 상태 (`OPEN`, `CLOSED`, `FULL` 등) |
+| category | string | 카테고리 또는 태그 |
+| maxMembers | integer | 최대 참여 인원 수 |
+| createdAtFormatted | string | 생성일시 (YYYY-MM-DD HH:mm 형식) |
+| closedAtFormatted | string or null | 종료일시 (종료 전이면 `null`) |
+
+### ✅ 성공 응답 예시
+
+```json
+{
+  "studyRoomId": 133,
+  "title": "React 기초 스터디",
+  "description": "리액트 기본 문법과 프로젝트 실습",
+  "organizer": "박개발",
+  "status": "OPEN",
+  "category": "#프론트엔드",
+  "maxMembers": 8,
+  "createdAtFormatted": "2025-06-10 18:00",
+  "closedAtFormatted": null
+  }
+```
+
+### ❌ 실패 응답 예시 — ID에 해당하는 스터디룸이 없는 경우
+
+- **Status**: `404 Not Found`
+- **Content-Type**: `application/json`
+
+```json
+{
+  "error": "해당 스터디룸을 찾을 수 없습니다. id=133"
+}
+```
+### 📝 참고 사항
+
+- 존재하지 않는 `studyRoomId`로 요청할 경우 `404 Not Found` 응답이 반환됩니다.
+- 이 API는 주로 스터디룸 목록에서 특정 항목을 클릭했을 때 **상세 페이지 조회** 용도로 사용됩니다.
+- 프론트엔드에서는 실패 응답을 받아 **"존재하지 않는 스터디입니다."** 등의 메시지로 사용자에게 안내해야 합니다.
+    
+</details>
+
+
+<details>
+    <summary>📌 전체 스터디룸 조회 API</summary>
+
+### 📤 요청 정보
+
+- **HTTP 메서드**: `GET`
+- **URL**: `http://localhost:8080/study/searchAll`
+- **Content-Type**: 없음 (Request Body 없음)
+- **인증 필요**: ✅ 로그인된 사용자 (예: JWT 토큰)
+
+### 📥 응답 정보
+
+- **HTTP 상태코드**: `200 OK`
+- **Content-Type**: `application/json`
+- **응답 형태**: **스터디룸 객체 배열(JSON Array)**
+
+### 📄 각 스터디룸 객체 구조
+
+| 필드명 | 타입 | 설명 |
+| --- | --- | --- |
+| studyRoomId | integer | 스터디룸 고유 ID |
+| title | string | 스터디 제목 |
+| description | string | 스터디 설명 |
+| organizer | string | 주최자 이름 |
+| status | string | 현재 상태 (`OPEN`, `CLOSED` 등) |
+| category | string | 카테고리 또는 해시태그 |
+| maxMembers | integer | 최대 참여 가능 인원 수 |
+| createdAtFormatted | string | 생성일시 (YYYY-MM-DD HH:mm 형태 등) |
+| closedAtFormatted | string or null | 종료일시 (종료 전이면 `null`) |
+
+### ✅ 성공 응답 예시
+
+```json
+[
+  {
+    "studyRoomId": 1,
+    "title": "자바 백엔드 스터디",
+    "description": "매주 화요일 온라인으로 진행합니다.",
+    "organizer": "홍길동",
+    "status": "OPEN",
+    "category": "#백엔드",
+    "maxMembers": 10,
+    "createdAtFormatted": "2025-06-15 20:30",
+    "closedAtFormatted": null
+    },
+  {
+    "studyRoomId": 2,
+    "title": "알고리즘 실전반",
+    "description": "코딩 테스트 대비 집중 스터디",
+    "organizer": "김철수",
+    "status": "CLOSED",
+    "category": "#알고리즘",
+    "maxMembers": 15,
+    "createdAtFormatted": "2025-05-01 10:00",
+    "closedAtFormatted": "2025-06-01 18:00"
+  }
+]
+```
+
+### 📝 참고 사항
+
+- 이 API는 **페이징 처리**가 없는 단순 전체 조회 기준입니다. (추후 페이지네이션 추가 가능)
+- `status` 값은 백엔드 정책에 따라 `"OPEN"`, `"CLOSED"` 등 다양할 수 있습니다.
+- 날짜 필드는 사용자에게 바로 보여줄 수 있도록 `createdAtFormatted` 형식으로 가공되어 전달됩니다.
+- 프론트엔드에서는 이 목록을 테이블 또는 카드형 UI로 표현하여 사용자 탐색을 돕습니다.
+- 
+</details>
+
+
+<details>
+    <summary>📌 스터디룸 생성 API</summary>
+    
+### 📤 요청 정보
+
+- **HTTP 메서드**: `POST`
+- **URL**: `http://localhost:8080/study/create`
+- **Content-Type**: `application/json`
+- **인증 필요**: ✅ 로그인된 사용자 (예: JWT 토큰)
+- 
+### 📦 요청 바디 (Request Body)
+
+```json
+{
+  "title": "자바 백엔드 스터디",
+  "description": "매주 온라인으로 진행하는 백엔드 학습 모임",
+  "organizer": "홍길동",
+  "category": "#백엔드",
+  "maxMembers": 10
+}
+```
+
+| 필드명 | 타입 | 필수 | 설명 |
+| --- | --- | --- | --- |
+| title | string | ✅ | 스터디 제목 |
+| description | string | ✅ | 스터디 설명 |
+| organizer | string | ✅ | 주최자 이름 (또는 생성자 표시용) |
+| category | string | ✅ | 스터디 분류 태그 (예: `#백엔드`, `#알고리즘`) |
+| maxMembers | integer | ✅ | 최대 모집 인원 (예: 10명) |
+
+### 📥 응답 정보
+
+- **HTTP 상태코드**: `201 Created`
+- **Content-Type**: `application/json`
+
+### 응답 바디 구조
+
+| 필드명 | 타입 | 설명 |
+| --- | --- | --- |
+| studyRoomId | integer | 생성된 스터디룸의 고유 ID |
+| title | string | 스터디 제목 |
+| description | string | 스터디 설명 |
+| organizer | string | 주최자 이름 |
+| status | string | 현재 상태 (`OPEN`, `CLOSED` 등) |
+| category | string | 스터디 분류 태그 |
+| maxMembers | integer | 최대 모집 인원 |
+| createdAtFormatted | string | 생성일시 (YYYY-MM-DD HH:mm 형식 등) |
+| closedAtFormatted | string or null | 종료일시 (종료된 경우에만 값 존재, 없으면 `null`) |
+
+### ✅ 성공 응답 예시
+
+```json
+{
+  "studyRoomId": 1,
+  "title": "자바 백엔드 스터디",
+  "description": "매주 온라인으로 진행하는 백엔드 학습 모임",
+  "organizer": "홍길동",
+  "status": "OPEN",
+  "category": "#백엔드",
+  "maxMembers": 10,
+  "createdAtFormatted": "2025-06-15 20:15",
+  "closedAtFormatted": null
+  }
+```
+
+### ❌ 실패 응답 예시 1 — organizer 공백
+
+```json
+{
+    "error": "스터디 주최자는 필수입니다."
+}
+```
+
+### ❌ 실패 응답 예시 2 — title 공백
+
+```json
+{
+    "error": "스터디 제목은 필수입니다."
+}
+```
+
+### ❌ 실패 응답 예시 3 — maxMembers 공백
+
+```json
+{
+    "error": "최대 인원은 1명 이상이어야 합니다."
+}
+```
+
+### 📝 참고 사항
+
+- 생성된 스터디룸은 기본적으로 `OPEN` 상태로 시작되며, 모집 완료나 운영 종료 시 `CLOSED`로 변경됩니다.
+- `createdAtFormatted`와 `closedAtFormatted`는 UI에 바로 출력 가능한 문자열 형태로 제공됩니다.
+- `organizer`는 백엔드에서 로그인 사용자로 자동 설정될 수도 있으며, 클라이언트에서 입력받는 방식은 정책에 따라 다릅니다.
+    
+</details>
 
 
 ###
