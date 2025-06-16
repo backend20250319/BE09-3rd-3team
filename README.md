@@ -54,16 +54,9 @@
 ---
 ## 2. 요구사항 정의서
 ### ➡️ [요구사항 정의](https://docs.google.com/spreadsheets/d/1HtXuEdEVc-X33P9dlSijZ4n9vdVsh1qGxlXfCI01yM8/edit?gid=2066474634#gid=2066474634)
-</br>
-
 ### ➡️ [요구사항 정의서 - 기능 요구사항](https://docs.google.com/spreadsheets/d/1HtXuEdEVc-X33P9dlSijZ4n9vdVsh1qGxlXfCI01yM8/edit?gid=2019732067#gid=2019732067)
-</br>
-
 ### ➡️ [테스트 케이스](https://docs.google.com/spreadsheets/d/1HtXuEdEVc-X33P9dlSijZ4n9vdVsh1qGxlXfCI01yM8/edit?gid=0#gid=0)
-</br>
-
 ### ➡️ [테스트 케이스 결과](https://docs.google.com/spreadsheets/d/1HtXuEdEVc-X33P9dlSijZ4n9vdVsh1qGxlXfCI01yM8/edit?gid=1961251299#gid=1961251299)
-</br>
 
 
 ---
