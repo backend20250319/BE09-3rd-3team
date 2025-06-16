@@ -53,7 +53,7 @@
 
 ---
 ## 2. 요구사항 정의서
-### ➡️ [요구사항 정의서 & 테스트 케이스 결과서](https://docs.google.com/spreadsheets/d/1HtXuEdEVc-X33P9dlSijZ4n9vdVsh1qGxlXfCI01yM8/edit?usp=sharing)
+### ➡️ [요구사항 정의서 - 기능 요구사항]([https://docs.google.com/spreadsheets/d/1HtXuEdEVc-X33P9dlSijZ4n9vdVsh1qGxlXfCI01yM8/edit?usp=sharing](https://docs.google.com/spreadsheets/d/1HtXuEdEVc-X33P9dlSijZ4n9vdVsh1qGxlXfCI01yM8/edit?gid=2019732067#gid=2019732067))
 
 
 ---
