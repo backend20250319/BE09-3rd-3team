@@ -3,6 +3,10 @@ package com.ohgiraffers.commentservice.entity;
 import jakarta.persistence.*;
         import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -14,7 +18,13 @@ public class Notice {
     private Long id;
 
     private Long studyRoomId;
-    private Long writerId;
+    private String writerId;
     private String title;
     private String content;
+
+    @CreationTimestamp
+    private LocalDateTime createdTime;
+
+    @UpdateTimestamp
+    private LocalDateTime modifiedTime;
 }

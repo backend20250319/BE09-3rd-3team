@@ -5,9 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-
-public class NoticeRequestDto {
-    private String title;
-    private String content;// 방장 Id
+public class UserDto {
+    private String study_room_id;
+    private String organizer_id;
 }
-

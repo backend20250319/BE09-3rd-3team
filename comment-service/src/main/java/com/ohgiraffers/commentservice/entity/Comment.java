@@ -26,6 +26,8 @@ public class Comment {
 
     private Long postId;
 
+    private Long parentId;
+
     @CreationTimestamp
     private LocalDateTime createdTime;
 

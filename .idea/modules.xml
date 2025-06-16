@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/comment-service/StudyIt.comment-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/comment-service/StudyIt.comment-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/gateway/StudyIt.gateway.main.iml" filepath="$PROJECT_DIR$/.idea/modules/gateway/StudyIt.gateway.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gateway/StudyIt.gateway.test.iml" filepath="$PROJECT_DIR$/.idea/modules/gateway/StudyIt.gateway.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/jwt-common/StudyIt.jwt-common.main.iml" filepath="$PROJECT_DIR$/.idea/modules/jwt-common/StudyIt.jwt-common.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/study-service/StudyIt.study-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/study-service/StudyIt.study-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/user-service/StudyIt.user-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/user-service/StudyIt.user-service.main.iml" />

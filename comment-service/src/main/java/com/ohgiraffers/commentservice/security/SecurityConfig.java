@@ -1,19 +1,13 @@
-package io.studyit.userservice.config;
+package com.ohgiraffers.commentservice.security;
 
-import io.studyit.userservice.jwt.HeaderAuthenticationFilter;
-import io.studyit.userservice.jwt.RestAccessDeniedHandler;
-import io.studyit.userservice.jwt.RestAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -27,11 +21,6 @@ public class SecurityConfig {
     private final RestAccessDeniedHandler restAccessDeniedHandler;
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session
@@ -42,15 +31,16 @@ public class SecurityConfig {
                                 .accessDeniedHandler(restAccessDeniedHandler)
                 )
                 .authorizeHttpRequests(auth ->
-                        auth
-                                .requestMatchers(HttpMethod.POST, "/user/signup", "/user/login", "/user/refresh").permitAll()
-                                .anyRequest().authenticated()
+                                auth
+                                        // 현재 security가 설정되지 않았으므로 모든 요청을 허용
+//                        .requestMatchers(HttpMethod.POST, "/orders").hasAuthority("USER")
+                                        .anyRequest().permitAll()
                 )
+                // 기존 JWT 검증 필터 대신, Gateway가 전달한 헤더를 이용하는 필터 추가
                 .addFilterBefore(headerAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
-
 
     @Bean
     public HeaderAuthenticationFilter headerAuthenticationFilter() {
