@@ -141,9 +141,9 @@
 - `studyRoomId` 값이 존재하는지 백엔드에서 확인합니다.
 </details>
 
-### 
+<details>
 
-### 📕 스터디 참가 신청 취소 API
+    <summary>### 📕 스터디 참가 신청 취소 API</summary>
 
 ### 📤 요청 정보
 
@@ -220,3 +220,5 @@
 - 이 API는 로그인한 사용자의 신청 내역 중 `대기 상태(PENDING)`인 것만 취소할 수 있습니다.
 - 승인된 신청(예: `APPROVED`, `REJECTED`)은 취소할 수 없습니다.
 - 스터디 ID는 존재해야 하며, 유효하지 않으면 `STUDY_NOT_FOUND` 오류가 발생합니다.
+
+</details>
