@@ -20,10 +20,6 @@ public class UserDetailsImpl implements UserDetails {
     }
 
 
-    public String getUserId() {
-        return userId;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;

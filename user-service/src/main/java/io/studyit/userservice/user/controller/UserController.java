@@ -2,6 +2,8 @@ package io.studyit.userservice.user.controller;
 
 import io.studyit.userservice.common.ApiResponse;
 import io.studyit.userservice.user.dto.*;
+import io.studyit.userservice.user.entity.User;
+import io.studyit.userservice.user.repository.UserRepository;
 import io.studyit.userservice.user.security.UserDetailsImpl;
 import io.studyit.userservice.user.service.UserService;
 import io.studyit.userservice.user.service.UserCommandService;
@@ -18,6 +20,8 @@ public class UserController {
 
     private final UserService userService;
     private final UserCommandService userCommandService;
+    private final UserRepository userRepository;
+
 
     @PostMapping("/signup")
     public ResponseEntity<ApiResponse<Void>> register(@RequestBody UserCreateRequest request) {
@@ -45,22 +49,41 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.success(response, "토큰이 성공적으로 갱신되었습니다."));
     }
 
+
     @PatchMapping("/{userId}/password")
-    public ResponseEntity<ApiResponse<Void>> changePassword(
+    public ResponseEntity<ApiResponse<ChangeResultResponse>> changePassword(
             @PathVariable String userId,
             @RequestBody ChangePasswordRequest request,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+        User user = userCommandService.findUserByUserId(userId);
+
+        String before = "******";
+
         userCommandService.changePassword(userId, request, userDetails);
-        return ResponseEntity.ok(ApiResponse.successWithMessage("비밀번호가 성공적으로 변경되었습니다."));
+
+        String after = request.getNewPassword();
+
+        ChangeResultResponse response = new ChangeResultResponse(before, after);
+
+        return ResponseEntity.ok(ApiResponse.success(response, "비밀번호가 성공적으로 변경되었습니다."));
     }
 
     @PatchMapping("/{userId}/name")
-    public ResponseEntity<ApiResponse<Void>> changeName(
+    public ResponseEntity<ApiResponse<ChangeResultResponse>> changeName(
             @PathVariable String userId,
             @RequestBody ChangeNameRequest request,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+        User user = userCommandService.findUserByUserId(userId);
+        String before = user.getName();
+        String after = request.getName();
+
         userCommandService.changeName(userId, request, userDetails);
-        return ResponseEntity.ok(ApiResponse.successWithMessage("이름이 성공적으로 변경되었습니다."));
+
+        ChangeResultResponse response = new ChangeResultResponse(before, after);
+
+        return ResponseEntity.ok(ApiResponse.success(response, "이름이 성공적으로 변경되었습니다."));
     }
 
     @DeleteMapping("/{userId}/delete")

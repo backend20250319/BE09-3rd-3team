@@ -93,4 +93,11 @@ public class UserCommandService {
 
         userRepository.delete(user);
     }
+
+
+    @Transactional(readOnly = true)
+    public User findUserByUserId(String userId) {
+        return userRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다."));
+    }
 }
