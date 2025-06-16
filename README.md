@@ -3,7 +3,7 @@
 스터디를 개설하고, 참가하고, 승인/거절하며  
 관리할 수 있는 **스터디 모집 통합 서비스**입니다.
 
-### [Backend Source](https://github.com/backend20250319/BE09-3rd-3team)
+### ➡️ [Backend Source](https://github.com/backend20250319/BE09-3rd-3team)
 : 스터디잇(StudyIt)
 
 ---
